@@ -225,20 +225,20 @@ export default function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-slate-900">
       {/* Header */}
-      <div className="bg-gray-800 border-b border-gray-700">
+      <div className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-white">
-            Toma<span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AI</span>
+            Toma<span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">AI</span>
           </h1>
           <div className="flex items-center gap-4">
             {user && (
               <div className="text-white text-sm">
                 {userSubscription.tier === 'free' ? (
-                  <span className="bg-gray-600 px-2 py-1 rounded">Free Plan</span>
+                  <span className="bg-slate-600 px-3 py-1 rounded-full text-xs font-medium">Free Plan</span>
                 ) : (
-                  <span className="bg-blue-600 px-2 py-1 rounded">
+                  <span className="bg-gradient-to-r from-cyan-500 to-blue-500 px-3 py-1 rounded-full text-xs font-medium">
                     {userSubscription.tier.charAt(0).toUpperCase() + userSubscription.tier.slice(1)} Plan
                   </span>
                 )}
@@ -251,21 +251,21 @@ export default function AppLayout() {
       </div>
 
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
         <div className="absolute inset-0">
           <img 
             src={heroImage} 
             alt="AI Generated Art" 
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-10"
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 py-20">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
               AI Image
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Generator</span>
+              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"> Generator</span>
             </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
               Transform your imagination into stunning visuals with our advanced AI technology. 
               Create professional artwork, portraits, and designs in seconds.
             </p>

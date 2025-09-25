@@ -49,18 +49,18 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
   ];
 
   return (
-    <div className="bg-gray-800 rounded-2xl p-8 shadow-2xl">
+    <div className="bg-slate-800 rounded-2xl p-8 shadow-2xl border border-slate-700">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-white font-semibold text-lg mb-3">
             Describe your image
           </label>
           {userTier && (
-            <div className="mb-3 text-sm text-gray-300">
+            <div className="mb-3 text-sm text-slate-300">
               {userTier === 'free' ? (
-                <span>Free plan: {imagesUsed || 0}/3 images used</span>
+                <span className="bg-slate-700 px-3 py-1 rounded-full text-xs">Free plan: {imagesUsed || 0}/3 images used</span>
               ) : (
-                <span>{userTier.charAt(0).toUpperCase() + userTier.slice(1)} plan: {imagesUsed || 0}/{maxImages || 'unlimited'} images used</span>
+                <span className="bg-gradient-to-r from-cyan-500 to-blue-500 px-3 py-1 rounded-full text-xs">{userTier.charAt(0).toUpperCase() + userTier.slice(1)} plan: {imagesUsed || 0}/{maxImages || 'unlimited'} images used</span>
               )}
             </div>
           )}
@@ -68,7 +68,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="A beautiful landscape with mountains and a lake..."
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 h-32 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400"
+            className="w-full bg-slate-700 text-white rounded-xl px-4 py-3 h-32 resize-none focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-400 border border-slate-600"
             disabled={isGenerating}
           />
         </div>
@@ -79,7 +79,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
               key={index}
               type="button"
               onClick={() => setPrompt(example)}
-              className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-sm rounded-full transition-colors"
+              className="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded-full transition-colors border border-slate-600"
               disabled={isGenerating}
             >
               {example.slice(0, 30)}...
@@ -91,7 +91,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="text-blue-400 hover:text-blue-300 text-sm font-medium transition-colors"
+            className="text-cyan-400 hover:text-cyan-300 text-sm font-medium transition-colors"
           >
             {showAdvanced ? 'Hide' : 'Show'} Advanced Options
           </button>
@@ -99,14 +99,14 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
 
         {showAdvanced && (
           <div>
-            <label className="block text-gray-300 font-medium mb-2">
+            <label className="block text-slate-300 font-medium mb-2">
               Negative Prompt (what to avoid)
             </label>
             <textarea
               value={negativePrompt}
               onChange={(e) => setNegativePrompt(e.target.value)}
               placeholder="blurry, low quality, distorted..."
-              className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 h-24 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400"
+              className="w-full bg-slate-700 text-white rounded-xl px-4 py-3 h-24 resize-none focus:ring-2 focus:ring-cyan-500 focus:outline-none placeholder-slate-400 border border-slate-600"
               disabled={isGenerating}
             />
           </div>
@@ -114,18 +114,18 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
 
         {/* Progress Indicator */}
         {isGenerating && (
-          <div className="bg-gray-700 rounded-xl p-4 mb-4">
+          <div className="bg-slate-700 rounded-xl p-4 mb-4 border border-slate-600">
             <div className="flex items-center justify-between mb-2">
               <span className="text-white font-medium">{generationStatus || 'Generating your image...'}</span>
-              <span className="text-blue-400 font-bold">{generationProgress || 0}%</span>
+              <span className="text-cyan-400 font-bold">{generationProgress || 0}%</span>
             </div>
-            <div className="w-full bg-gray-600 rounded-full h-2">
+            <div className="w-full bg-slate-600 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out"
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${generationProgress || 0}%` }}
               ></div>
             </div>
-            <div className="text-gray-300 text-sm mt-2">
+            <div className="text-slate-300 text-sm mt-2">
               {generationProgress && generationProgress < 100 ? 'Creating your masterpiece...' : 'Finalizing your image...'}
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
         <button
           type="submit"
           disabled={!prompt.trim() || isGenerating}
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 disabled:cursor-not-allowed"
+          className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 disabled:from-slate-600 disabled:to-slate-600 text-white font-semibold py-4 rounded-xl transition-all duration-200 disabled:cursor-not-allowed shadow-lg"
         >
           {isGenerating ? 'Generating...' : 'Generate Image'}
         </button>
@@ -142,9 +142,9 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
         {/* Email Signup Modal */}
         {showEmailSignup && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-gray-800 rounded-2xl p-8 max-w-md w-full mx-4">
+            <div className="bg-slate-800 rounded-2xl p-8 max-w-md w-full mx-4 border border-slate-700">
               <h3 className="text-2xl font-bold text-white mb-4">Get 3 Free Images!</h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-slate-300 mb-6">
                 Sign up with your email to generate 3 free AI images. No credit card required!
               </p>
               <form onSubmit={handleEmailSignup} className="space-y-4">
@@ -155,7 +155,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full bg-slate-700 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-cyan-500 focus:outline-none border border-slate-600"
                     required
                   />
                 </div>
@@ -163,13 +163,13 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
                   <button
                     type="button"
                     onClick={() => setShowEmailSignup(false)}
-                    className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-xl transition-colors"
+                    className="flex-1 bg-slate-600 hover:bg-slate-700 text-white py-3 rounded-xl transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl transition-colors"
+                    className="flex-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white py-3 rounded-xl transition-colors"
                   >
                     Get Free Images
                   </button>
