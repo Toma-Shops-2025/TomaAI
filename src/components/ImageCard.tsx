@@ -4,7 +4,7 @@ interface ImageCardProps {
   src: string;
   prompt: string;
   style: string;
-  onDownload: () => void;
+  onDownload: (imageUrl: string, prompt: string) => void;
   onVariation: () => void;
 }
 
@@ -34,7 +34,7 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation 
           
           <div className="flex gap-2">
             <button
-              onClick={onDownload}
+              onClick={() => onDownload(src, prompt)}
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors"
             >
               Download

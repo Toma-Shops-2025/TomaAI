@@ -131,8 +131,14 @@ export default function AppLayout() {
     }
   };
 
-  const handleDownload = () => {
-    alert('Download started! (This would download the image in a real app)');
+  const handleDownload = (imageUrl: string, prompt: string) => {
+    // Create a temporary link element to download the image
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = `tomaai-${prompt.replace(/[^a-zA-Z0-9]/g, '-').substring(0, 30)}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleVariation = () => {
@@ -226,7 +232,7 @@ export default function AppLayout() {
                   src={image.image_url}
                   prompt={image.prompt}
                   style={image.style}
-                  onDownload={handleDownload}
+                  onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                   onVariation={handleVariation}
                 />
               ))}
@@ -245,7 +251,7 @@ export default function AppLayout() {
                   src={image.src}
                   prompt={image.prompt}
                   style={image.style}
-                  onDownload={handleDownload}
+                  onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                   onVariation={handleVariation}
                 />
               ))}
@@ -263,7 +269,7 @@ export default function AppLayout() {
                 src={image.src}
                 prompt={image.prompt}
                 style={image.style}
-                onDownload={handleDownload}
+                onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                 onVariation={handleVariation}
               />
             ))}
