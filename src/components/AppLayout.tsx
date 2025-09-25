@@ -8,6 +8,7 @@ import PricingModal from './PricingModal';
 import { useSupabase } from '@/contexts/SupabaseContext';
 import { GeneratedImage } from '@/lib/supabase';
 import { generateImages, getSampleImage } from '@/lib/openai';
+import { canGenerateImage, getRemainingImages, isTrialActive } from '@/lib/subscription';
 
 export default function AppLayout() {
   const { user, saveGeneratedImage, getGeneratedImages } = useSupabase();
@@ -18,6 +19,11 @@ export default function AppLayout() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedImages, setGeneratedImages] = useState<GeneratedImage[]>([]);
   const [savedImages, setSavedImages] = useState<GeneratedImage[]>([]);
+  const [userSubscription, setUserSubscription] = useState({
+    tier: 'free',
+    imagesUsed: 0,
+    trialEndsAt: null as string | null
+  });
 
   const heroImage = "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798663042_bb4db978.webp";
 
@@ -55,6 +61,17 @@ export default function AppLayout() {
   }, [user, getGeneratedImages]);
 
   const handleGenerate = async (prompt: string, negativePrompt: string) => {
+    // Check subscription status
+    if (user) {
+      const canGenerate = canGenerateImage(userSubscription.tier, userSubscription.imagesUsed);
+      const isTrial = isTrialActive(userSubscription.trialEndsAt);
+      
+      if (!canGenerate && !isTrial) {
+        alert('You have reached your image limit. Please upgrade your plan to generate more images.');
+        return;
+      }
+    }
+    
     setIsGenerating(true);
     
     try {
@@ -154,6 +171,17 @@ export default function AppLayout() {
             Toma<span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AI</span>
           </h1>
           <div className="flex items-center gap-4">
+            {user && (
+              <div className="text-white text-sm">
+                {userSubscription.tier === 'free' ? (
+                  <span className="bg-gray-600 px-2 py-1 rounded">Free Plan</span>
+                ) : (
+                  <span className="bg-blue-600 px-2 py-1 rounded">
+                    {userSubscription.tier.charAt(0).toUpperCase() + userSubscription.tier.slice(1)} Plan
+                  </span>
+                )}
+              </div>
+            )}
             <PricingModal />
             <AuthModal />
           </div>
