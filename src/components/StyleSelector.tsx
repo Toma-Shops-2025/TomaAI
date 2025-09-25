@@ -40,7 +40,7 @@ const styles = [
     name: 'Cyberpunk', 
     description: 'Futuristic neon', 
     icon: '🌃',
-    sampleImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'fantasy', 
