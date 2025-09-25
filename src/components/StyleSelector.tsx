@@ -12,7 +12,7 @@ const styles = [
     name: 'Photorealistic', 
     description: 'Lifelike photos', 
     icon: '📸',
-    sampleImage: 'https://images.unsplash.com/photo-1494790108755-2616c96b6a93?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'abstract', 
