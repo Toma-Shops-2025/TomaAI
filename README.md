@@ -41,17 +41,40 @@ cd TomaAI
 npm install
 ```
 
-### 3. Supabase Setup
+### 3. Environment Variables Setup
 
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL=https://irzzehvrytkunrxqniuo.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key-here
+
+# OpenAI Configuration (for AI image generation)
+VITE_OPENAI_API_KEY=your-openai-api-key-here
+
+# Stripe Configuration (for payments)
+VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your-stripe-publishable-key-here
+STRIPE_SECRET_KEY=sk_test_your-stripe-secret-key-here
+STRIPE_WEBHOOK_SECRET=whsec_your-webhook-secret-here
+```
+
+#### Getting API Keys:
+
+**Supabase:**
 1. Go to [Supabase](https://supabase.com) and create a new project
 2. In your Supabase project dashboard, go to Settings > API
 3. Copy your project URL and anon key
-4. Create a `.env.local` file in the root directory:
 
-```env
-VITE_SUPABASE_URL=https://your-project-url.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key-here
-```
+**OpenAI (for AI image generation):**
+1. Go to [OpenAI Platform](https://platform.openai.com)
+2. Create an API key in the API Keys section
+3. Add credits to your account (DALL-E 3 costs $0.040 per image)
+
+**Stripe (for payments):**
+1. Go to [Stripe Dashboard](https://dashboard.stripe.com)
+2. Get your publishable and secret keys from the API section
+3. Set up webhooks for payment processing
 
 ### 4. Database Setup
 

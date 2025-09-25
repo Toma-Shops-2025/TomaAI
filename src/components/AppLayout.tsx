@@ -7,6 +7,7 @@ import AuthModal from './AuthModal';
 import PricingModal from './PricingModal';
 import { useSupabase } from '@/contexts/SupabaseContext';
 import { GeneratedImage } from '@/lib/supabase';
+import { generateImages, getSampleImage } from '@/lib/openai';
 
 export default function AppLayout() {
   const { user, saveGeneratedImage, getGeneratedImages } = useSupabase();
@@ -55,30 +56,79 @@ export default function AppLayout() {
 
   const handleGenerate = async (prompt: string, negativePrompt: string) => {
     setIsGenerating(true);
-    // Simulate generation delay
-    setTimeout(async () => {
-      const newImage = {
-        src: sampleImages[Math.floor(Math.random() * sampleImages.length)].src,
+    
+    try {
+      // Try to generate with OpenAI API
+      const result = await generateImages({
+        prompt,
+        negativePrompt,
+        style: selectedStyle,
+        aspectRatio,
+        quality,
+        numImages
+      });
+
+      if (result.success && result.images.length > 0) {
+        // Use real generated images
+        const newImages = result.images.map(imageUrl => ({
+          src: imageUrl,
+          prompt,
+          style: selectedStyle
+        }));
+        
+        setGeneratedImages(prev => [...newImages, ...prev]);
+        
+        // Save to Supabase if user is logged in
+        if (user) {
+          for (const image of newImages) {
+            await saveGeneratedImage({
+              user_id: user.id,
+              prompt,
+              negative_prompt: negativePrompt,
+              style: selectedStyle,
+              aspect_ratio: aspectRatio,
+              quality,
+              image_url: image.src
+            });
+          }
+        }
+      } else {
+        // Fallback to sample images if API fails
+        console.warn('API generation failed, using sample images:', result.error);
+        const fallbackImage = {
+          src: getSampleImage(),
+          prompt,
+          style: selectedStyle
+        };
+        
+        setGeneratedImages(prev => [fallbackImage, ...prev]);
+        
+        // Save to Supabase if user is logged in
+        if (user) {
+          await saveGeneratedImage({
+            user_id: user.id,
+            prompt,
+            negative_prompt: negativePrompt,
+            style: selectedStyle,
+            aspect_ratio: aspectRatio,
+            quality,
+            image_url: fallbackImage.src
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Generation error:', error);
+      // Fallback to sample images
+      const fallbackImage = {
+        src: getSampleImage(),
         prompt,
         style: selectedStyle
       };
-      setGeneratedImages(prev => [newImage, ...prev]);
       
-      // Save to Supabase if user is logged in
-      if (user) {
-        await saveGeneratedImage({
-          user_id: user.id,
-          prompt,
-          negative_prompt: negativePrompt,
-          style: selectedStyle,
-          aspect_ratio: aspectRatio,
-          quality,
-          image_url: newImage.src
-        });
-      }
-      
+      setGeneratedImages(prev => [fallbackImage, ...prev]);
+    } finally {
       setIsGenerating(false);
-    }, 3000);
+    }
   };
 
   const handleDownload = () => {
