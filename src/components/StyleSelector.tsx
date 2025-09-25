@@ -47,7 +47,7 @@ const styles = [
     name: 'Fantasy', 
     description: 'Magical worlds', 
     icon: '🧙‍♂️',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'vintage', 
@@ -68,7 +68,7 @@ const styles = [
     name: 'Watercolor', 
     description: 'Soft painting', 
     icon: '🎨',
-    sampleImage: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'oil_painting', 
@@ -96,14 +96,14 @@ const styles = [
     name: 'Pop Art', 
     description: 'Bold & vibrant', 
     icon: '🟡',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578662015118-a4b75b69b2ee?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'surreal', 
     name: 'Surreal', 
     description: 'Dreamlike', 
     icon: '🌙',
-    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'steampunk', 
@@ -131,7 +131,7 @@ const styles = [
     name: 'Cartoon', 
     description: 'Animated style', 
     icon: '🎭',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'realistic_portrait', 
