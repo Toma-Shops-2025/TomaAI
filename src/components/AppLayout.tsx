@@ -8,6 +8,7 @@ import AuthModal from './AuthModal';
 import PricingModal from './PricingModal';
 import { useSupabase } from '@/contexts/SupabaseContext';
 import { GeneratedImage } from '@/lib/supabase';
+import { downloadAndStoreImage, createStorageBucket } from '@/lib/imageStorage';
 import { generateImages, getSampleImage } from '@/lib/openai';
 import { canGenerateImage, getRemainingImages, isTrialActive } from '@/lib/subscription';
 
@@ -63,6 +64,11 @@ export default function AppLayout() {
     };
     loadSavedImages();
   }, [user, getGeneratedImages]);
+
+  // Initialize storage bucket
+  useEffect(() => {
+    createStorageBucket();
+  }, []);
 
   const handleGenerate = async (prompt: string, negativePrompt: string) => {
     // Check subscription status
@@ -125,12 +131,18 @@ export default function AppLayout() {
         setGenerationProgress(100);
         setGenerationStatus('Image generated successfully!');
         
-        // Use real generated images
-        const newImages = result.images.map(imageUrl => ({
-          src: imageUrl,
-          prompt,
-          style: selectedStyle
-        }));
+        // Store images permanently and use real generated images
+        const newImages = [];
+        for (const imageUrl of result.images) {
+          // Download and store the image permanently
+          const permanentUrl = await downloadAndStoreImage(imageUrl, prompt, selectedStyle);
+          
+          newImages.push({
+            src: permanentUrl,
+            prompt,
+            style: selectedStyle
+          });
+        }
         
         setGeneratedImages(prev => [...newImages, ...prev]);
         

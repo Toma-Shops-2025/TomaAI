@@ -7,26 +7,146 @@ interface StyleSelectorProps {
 }
 
 const styles = [
-  { id: 'photorealistic', name: 'Photorealistic', description: 'Lifelike photos', icon: '📸' },
-  { id: 'abstract', name: 'Abstract', description: 'Modern art', icon: '🎨' },
-  { id: 'anime', name: 'Anime', description: 'Japanese animation', icon: '🎌' },
-  { id: 'artistic', name: 'Artistic', description: 'Traditional art', icon: '🖼️' },
-  { id: 'cyberpunk', name: 'Cyberpunk', description: 'Futuristic neon', icon: '🌃' },
-  { id: 'fantasy', name: 'Fantasy', description: 'Magical worlds', icon: '🧙‍♂️' },
-  { id: 'vintage', name: 'Vintage', description: 'Retro classic', icon: '📻' },
-  { id: 'minimalist', name: 'Minimalist', description: 'Clean & simple', icon: '⚪' },
-  { id: 'watercolor', name: 'Watercolor', description: 'Soft painting', icon: '🎨' },
-  { id: 'oil_painting', name: 'Oil Painting', description: 'Classical art', icon: '🖌️' },
-  { id: 'digital_art', name: 'Digital Art', description: 'Modern digital', icon: '💻' },
-  { id: 'sketch', name: 'Sketch', description: 'Hand-drawn', icon: '✏️' },
-  { id: 'pop_art', name: 'Pop Art', description: 'Bold & vibrant', icon: '🟡' },
-  { id: 'surreal', name: 'Surreal', description: 'Dreamlike', icon: '🌙' },
-  { id: 'steampunk', name: 'Steampunk', description: 'Victorian tech', icon: '⚙️' },
-  { id: 'gothic', name: 'Gothic', description: 'Dark & dramatic', icon: '🦇' },
-  { id: 'impressionist', name: 'Impressionist', description: 'Soft brushstrokes', icon: '🌅' },
-  { id: 'cartoon', name: 'Cartoon', description: 'Animated style', icon: '🎭' },
-  { id: 'realistic_portrait', name: 'Portrait', description: 'Professional headshot', icon: '👤' },
-  { id: 'landscape', name: 'Landscape', description: 'Nature scenes', icon: '🏞️' }
+  { 
+    id: 'photorealistic', 
+    name: 'Photorealistic', 
+    description: 'Lifelike photos', 
+    icon: '📸',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'abstract', 
+    name: 'Abstract', 
+    description: 'Modern art', 
+    icon: '🎨',
+    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'anime', 
+    name: 'Anime', 
+    description: 'Japanese animation', 
+    icon: '🎌',
+    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'artistic', 
+    name: 'Artistic', 
+    description: 'Traditional art', 
+    icon: '🖼️',
+    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'cyberpunk', 
+    name: 'Cyberpunk', 
+    description: 'Futuristic neon', 
+    icon: '🌃',
+    sampleImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'fantasy', 
+    name: 'Fantasy', 
+    description: 'Magical worlds', 
+    icon: '🧙‍♂️',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'vintage', 
+    name: 'Vintage', 
+    description: 'Retro classic', 
+    icon: '📻',
+    sampleImage: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'minimalist', 
+    name: 'Minimalist', 
+    description: 'Clean & simple', 
+    icon: '⚪',
+    sampleImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'watercolor', 
+    name: 'Watercolor', 
+    description: 'Soft painting', 
+    icon: '🎨',
+    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'oil_painting', 
+    name: 'Oil Painting', 
+    description: 'Classical art', 
+    icon: '🖌️',
+    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'digital_art', 
+    name: 'Digital Art', 
+    description: 'Modern digital', 
+    icon: '💻',
+    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'sketch', 
+    name: 'Sketch', 
+    description: 'Hand-drawn', 
+    icon: '✏️',
+    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'pop_art', 
+    name: 'Pop Art', 
+    description: 'Bold & vibrant', 
+    icon: '🟡',
+    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'surreal', 
+    name: 'Surreal', 
+    description: 'Dreamlike', 
+    icon: '🌙',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'steampunk', 
+    name: 'Steampunk', 
+    description: 'Victorian tech', 
+    icon: '⚙️',
+    sampleImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'gothic', 
+    name: 'Gothic', 
+    description: 'Dark & dramatic', 
+    icon: '🦇',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'impressionist', 
+    name: 'Impressionist', 
+    description: 'Soft brushstrokes', 
+    icon: '🌅',
+    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'cartoon', 
+    name: 'Cartoon', 
+    description: 'Animated style', 
+    icon: '🎭',
+    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'realistic_portrait', 
+    name: 'Portrait', 
+    description: 'Professional headshot', 
+    icon: '👤',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  },
+  { 
+    id: 'landscape', 
+    name: 'Landscape', 
+    description: 'Nature scenes', 
+    icon: '🏞️',
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+  }
 ];
 
 export default function StyleSelector({ selectedStyle, onStyleChange, disabled = false }: StyleSelectorProps) {
@@ -44,15 +164,39 @@ export default function StyleSelector({ selectedStyle, onStyleChange, disabled =
             key={style.id}
             onClick={() => onStyleChange(style.id)}
             disabled={disabled}
-            className={`p-3 rounded-lg text-left transition-all duration-200 ${
+            className={`relative overflow-hidden rounded-lg text-left transition-all duration-200 ${
               selectedStyle === style.id
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-2 border-cyan-400'
-                : 'bg-slate-700 hover:bg-slate-600 text-slate-300 border border-slate-600'
+                ? 'ring-2 ring-cyan-400 ring-offset-2 ring-offset-slate-900'
+                : 'hover:scale-105'
             } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            <div className="text-2xl mb-1">{style.icon}</div>
-            <div className="font-medium text-sm">{style.name}</div>
-            <div className="text-xs opacity-75">{style.description}</div>
+            <div className="relative">
+              <img 
+                src={style.sampleImage} 
+                alt={style.name}
+                className="w-full h-24 object-cover"
+                onError={(e) => {
+                  // Fallback to a placeholder if image fails to load
+                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                }}
+              />
+              <div className={`absolute inset-0 bg-gradient-to-t ${
+                selectedStyle === style.id 
+                  ? 'from-cyan-600/80 to-blue-600/80' 
+                  : 'from-black/60 to-transparent'
+              }`} />
+              <div className="absolute bottom-2 left-2 right-2">
+                <div className="text-white font-medium text-sm">{style.name}</div>
+                <div className="text-white/80 text-xs">{style.description}</div>
+              </div>
+              {selectedStyle === style.id && (
+                <div className="absolute top-2 right-2">
+                  <div className="w-6 h-6 bg-cyan-400 rounded-full flex items-center justify-center">
+                    <span className="text-white text-xs">✓</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </button>
         ))}
       </div>
