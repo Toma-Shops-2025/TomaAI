@@ -26,7 +26,7 @@ const styles = [
     name: 'Anime', 
     description: 'Japanese animation', 
     icon: '🎌',
-    sampleImage: 'https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1607790341019-022277071598?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'artistic', 
@@ -40,7 +40,7 @@ const styles = [
     name: 'Cyberpunk', 
     description: 'Futuristic neon', 
     icon: '🌃',
-    sampleImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'fantasy', 
@@ -75,7 +75,7 @@ const styles = [
     name: 'Oil Painting', 
     description: 'Classical art', 
     icon: '🖌️',
-    sampleImage: 'https://images.unsplash.com/photo-1578662015118-a4b75b69b2ee?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578926375605-eaf7055397f6?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'digital_art', 
@@ -117,7 +117,7 @@ const styles = [
     name: 'Gothic', 
     description: 'Dark & dramatic', 
     icon: '🦇',
-    sampleImage: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab56e8?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'impressionist', 
