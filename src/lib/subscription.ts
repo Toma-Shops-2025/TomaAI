@@ -9,9 +9,9 @@ export interface SubscriptionTier {
 export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {
   free: {
     name: 'Free',
-    maxImages: 3, // Limited free tier
+    maxImages: 20, // Temporarily increased for testing
     price: 0,
-    features: ['3 free images', 'Basic styles', 'Standard quality']
+    features: ['20 free images', 'All styles', 'Standard quality']
   },
   starter: {
     name: 'Starter',

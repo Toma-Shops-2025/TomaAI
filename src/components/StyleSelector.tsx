@@ -154,6 +154,13 @@ export default function StyleSelector({ selectedStyle, onStyleChange, disabled =
   
   const displayedStyles = showAll ? styles : styles.slice(0, 8);
 
+  // Helper function to update a style's sample image
+  const updateStyleImage = (styleId: string, newImageUrl: string) => {
+    // This would be called when you want to replace a style's sample image
+    console.log(`Updating ${styleId} with new image: ${newImageUrl}`);
+    // You can call this function after generating each image
+  };
+
   return (
     <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
       <h3 className="text-white font-semibold text-lg mb-4">Choose a Style</h3>
