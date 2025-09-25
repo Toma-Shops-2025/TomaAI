@@ -26,7 +26,7 @@ const styles = [
     name: 'Anime', 
     description: 'Japanese animation', 
     icon: '🎌',
-    sampleImage: 'https://images.unsplash.com/photo-1607790341019-022277071598?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'artistic', 
