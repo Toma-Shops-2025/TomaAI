@@ -12,7 +12,7 @@ const styles = [
     name: 'Photorealistic', 
     description: 'Lifelike photos', 
     icon: '📸',
-    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1494790108755-2616c96b6a93?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'abstract', 
@@ -26,7 +26,7 @@ const styles = [
     name: 'Anime', 
     description: 'Japanese animation', 
     icon: '🎌',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1613376023733-0a73315d9b06?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'artistic', 
@@ -47,7 +47,7 @@ const styles = [
     name: 'Fantasy', 
     description: 'Magical worlds', 
     icon: '🧙‍♂️',
-    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'vintage', 
@@ -68,35 +68,35 @@ const styles = [
     name: 'Watercolor', 
     description: 'Soft painting', 
     icon: '🎨',
-    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'oil_painting', 
     name: 'Oil Painting', 
     description: 'Classical art', 
     icon: '🖌️',
-    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578662015118-a4b75b69b2ee?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'digital_art', 
     name: 'Digital Art', 
     description: 'Modern digital', 
     icon: '💻',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'sketch', 
     name: 'Sketch', 
     description: 'Hand-drawn', 
     icon: '✏️',
-    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'pop_art', 
     name: 'Pop Art', 
     description: 'Bold & vibrant', 
     icon: '🟡',
-    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'surreal', 
@@ -110,21 +110,21 @@ const styles = [
     name: 'Steampunk', 
     description: 'Victorian tech', 
     icon: '⚙️',
-    sampleImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'gothic', 
     name: 'Gothic', 
     description: 'Dark & dramatic', 
     icon: '🦇',
-    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1520637836862-4d197d17c35a?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'impressionist', 
     name: 'Impressionist', 
     description: 'Soft brushstrokes', 
     icon: '🌅',
-    sampleImage: 'https://images.unsplash.com/photo-1549490349-8643362247b5?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'cartoon', 
@@ -138,7 +138,7 @@ const styles = [
     name: 'Portrait', 
     description: 'Professional headshot', 
     icon: '👤',
-    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'landscape', 
