@@ -47,7 +47,7 @@ const styles = [
     name: 'Fantasy', 
     description: 'Magical worlds', 
     icon: '🧙‍♂️',
-    sampleImage: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=300&fit=crop&crop=center'
+    sampleImage: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab56e8?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'vintage', 
