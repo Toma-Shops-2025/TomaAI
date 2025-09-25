@@ -22,7 +22,8 @@ export default function AppLayout() {
   const [userSubscription, setUserSubscription] = useState({
     tier: 'free',
     imagesUsed: 0,
-    trialEndsAt: null as string | null
+    trialEndsAt: null as string | null,
+    emailCollected: false
   });
   const [generationProgress, setGenerationProgress] = useState(0);
   const [generationStatus, setGenerationStatus] = useState('');
@@ -73,9 +74,9 @@ export default function AppLayout() {
         return;
       }
     } else {
-      // For non-logged in users, allow 1 free image
-      if (generatedImages.length >= 1) {
-        alert('Please sign in to generate more images or upgrade your plan.');
+      // For non-logged in users, check if they've provided email for free images
+      if (!userSubscription.emailCollected && generatedImages.length >= 3) {
+        alert('Please provide your email to continue generating free images or sign up for a plan.');
         return;
       }
     }
@@ -208,6 +209,21 @@ export default function AppLayout() {
     alert('Creating variation... (This would generate a similar image)');
   };
 
+  const handleEmailCollection = (email: string) => {
+    // Update subscription state to show email collected
+    setUserSubscription(prev => ({
+      ...prev,
+      emailCollected: true
+    }));
+    
+    // Here you would typically save the email to your database
+    // For now, we'll just update the local state
+    console.log('Email collected:', email);
+    
+    // You could also send a welcome email here
+    // sendWelcomeEmail(email);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Header */}
@@ -270,6 +286,7 @@ export default function AppLayout() {
               maxImages={userSubscription.tier === 'free' ? 3 : userSubscription.tier === 'enterprise' ? -1 : userSubscription.tier === 'starter' ? 50 : 200}
               generationProgress={generationProgress}
               generationStatus={generationStatus}
+              onEmailCollection={handleEmailCollection}
             />
             
             {/* Style Presets */}
