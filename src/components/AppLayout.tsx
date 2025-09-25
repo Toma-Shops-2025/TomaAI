@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ImageCard from './ImageCard';
 import StylePreset from './StylePreset';
 import GenerationControls from './GenerationControls';
+import StyleSelector from './StyleSelector';
 import PromptInput from './PromptInput';
 import AuthModal from './AuthModal';
 import PricingModal from './PricingModal';
@@ -289,22 +290,11 @@ export default function AppLayout() {
               onEmailCollection={handleEmailCollection}
             />
             
-            {/* Style Presets */}
-            <div>
-              <h3 className="text-white font-semibold text-xl mb-4">Choose a Style</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {stylePresets.map((style) => (
-                  <StylePreset
-                    key={style.name}
-                    name={style.name}
-                    description={style.description}
-                    previewImage={style.previewImage}
-                    isSelected={selectedStyle === style.name.toLowerCase()}
-                    onClick={() => setSelectedStyle(style.name.toLowerCase())}
-                  />
-                ))}
-              </div>
-            </div>
+            <StyleSelector
+              selectedStyle={selectedStyle}
+              onStyleChange={setSelectedStyle}
+              disabled={isGenerating}
+            />
           </div>
 
           {/* Right Column - Controls */}
