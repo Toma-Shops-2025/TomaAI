@@ -24,6 +24,8 @@ export default function AppLayout() {
     imagesUsed: 0,
     trialEndsAt: null as string | null
   });
+  const [generationProgress, setGenerationProgress] = useState(0);
+  const [generationStatus, setGenerationStatus] = useState('');
 
   const heroImage = "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798663042_bb4db978.webp";
 
@@ -70,9 +72,40 @@ export default function AppLayout() {
         alert('You have reached your image limit. Please upgrade your plan to generate more images.');
         return;
       }
+    } else {
+      // For non-logged in users, allow 1 free image
+      if (generatedImages.length >= 1) {
+        alert('Please sign in to generate more images or upgrade your plan.');
+        return;
+      }
     }
     
     setIsGenerating(true);
+    setGenerationProgress(0);
+    setGenerationStatus('Initializing AI generation...');
+    
+    // Simulate progress updates
+    const progressInterval = setInterval(() => {
+      setGenerationProgress(prev => {
+        if (prev >= 90) return prev;
+        return prev + Math.random() * 15;
+      });
+    }, 500);
+    
+    // Update status messages
+    const statusInterval = setInterval(() => {
+      setGenerationStatus(prev => {
+        const messages = [
+          'Analyzing your prompt...',
+          'Generating creative concepts...',
+          'Rendering your image...',
+          'Adding final touches...',
+          'Almost ready...'
+        ];
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        return randomMessage;
+      });
+    }, 1000);
     
     try {
       // Try to generate with OpenAI API
@@ -86,6 +119,10 @@ export default function AppLayout() {
       });
 
       if (result.success && result.images.length > 0) {
+        // Complete progress
+        setGenerationProgress(100);
+        setGenerationStatus('Image generated successfully!');
+        
         // Use real generated images
         const newImages = result.images.map(imageUrl => ({
           src: imageUrl,
@@ -144,7 +181,16 @@ export default function AppLayout() {
       
       setGeneratedImages(prev => [fallbackImage, ...prev]);
     } finally {
-      setIsGenerating(false);
+      // Clear intervals
+      clearInterval(progressInterval);
+      clearInterval(statusInterval);
+      
+      // Reset state after a short delay to show completion
+      setTimeout(() => {
+        setIsGenerating(false);
+        setGenerationProgress(0);
+        setGenerationStatus('');
+      }, 2000);
     }
   };
 
@@ -216,7 +262,15 @@ export default function AppLayout() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Generation */}
           <div className="lg:col-span-2 space-y-8">
-            <PromptInput onGenerate={handleGenerate} isGenerating={isGenerating} />
+            <PromptInput 
+              onGenerate={handleGenerate} 
+              isGenerating={isGenerating}
+              userTier={userSubscription.tier}
+              imagesUsed={userSubscription.imagesUsed}
+              maxImages={userSubscription.tier === 'free' ? 3 : userSubscription.tier === 'enterprise' ? -1 : userSubscription.tier === 'starter' ? 50 : 200}
+              generationProgress={generationProgress}
+              generationStatus={generationStatus}
+            />
             
             {/* Style Presets */}
             <div>

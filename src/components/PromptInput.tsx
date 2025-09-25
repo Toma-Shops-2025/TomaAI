@@ -3,9 +3,14 @@ import React, { useState } from 'react';
 interface PromptInputProps {
   onGenerate: (prompt: string, negativePrompt: string) => void;
   isGenerating: boolean;
+  userTier?: string;
+  imagesUsed?: number;
+  maxImages?: number;
+  generationProgress?: number;
+  generationStatus?: string;
 }
 
-export default function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
+export default function PromptInput({ onGenerate, isGenerating, userTier, imagesUsed, maxImages, generationProgress, generationStatus }: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -30,6 +35,15 @@ export default function PromptInput({ onGenerate, isGenerating }: PromptInputPro
           <label className="block text-white font-semibold text-lg mb-3">
             Describe your image
           </label>
+          {userTier && (
+            <div className="mb-3 text-sm text-gray-300">
+              {userTier === 'free' ? (
+                <span>Free plan: {imagesUsed || 0}/3 images used</span>
+              ) : (
+                <span>{userTier.charAt(0).toUpperCase() + userTier.slice(1)} plan: {imagesUsed || 0}/{maxImages || 'unlimited'} images used</span>
+              )}
+            </div>
+          )}
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -75,6 +89,25 @@ export default function PromptInput({ onGenerate, isGenerating }: PromptInputPro
               className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 h-24 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none placeholder-gray-400"
               disabled={isGenerating}
             />
+          </div>
+        )}
+
+        {/* Progress Indicator */}
+        {isGenerating && (
+          <div className="bg-gray-700 rounded-xl p-4 mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white font-medium">{generationStatus || 'Generating your image...'}</span>
+              <span className="text-blue-400 font-bold">{generationProgress || 0}%</span>
+            </div>
+            <div className="w-full bg-gray-600 rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out"
+                style={{ width: `${generationProgress || 0}%` }}
+              ></div>
+            </div>
+            <div className="text-gray-300 text-sm mt-2">
+              {generationProgress && generationProgress < 100 ? 'Creating your masterpiece...' : 'Finalizing your image...'}
+            </div>
           </div>
         )}
 
