@@ -70,6 +70,14 @@ export default function AppLayout() {
     loadSavedImages();
   }, [user, getGeneratedImages]);
 
+  // Update imagesUsed count when savedImages changes
+  useEffect(() => {
+    setUserSubscription(prev => ({
+      ...prev,
+      imagesUsed: savedImages.length
+    }));
+  }, [savedImages]);
+
   // Initialize storage bucket
   useEffect(() => {
     createStorageBucket();

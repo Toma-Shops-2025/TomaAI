@@ -3,38 +3,14 @@ import { supabase } from './supabase';
 
 export async function downloadAndStoreImage(imageUrl: string, prompt: string, style: string): Promise<string> {
   try {
-    // Download the image from DALL-E URL
-    const response = await fetch(imageUrl);
-    if (!response.ok) {
-      throw new Error('Failed to download image');
-    }
+    // Temporarily skip storage due to CORS issues with DALL-E URLs
+    // DALL-E images have CORS restrictions that prevent direct download
+    console.log('Using original DALL-E URL due to CORS restrictions:', imageUrl);
+    return imageUrl;
     
-    const blob = await response.blob();
-    
-    // Create a unique filename
-    const timestamp = Date.now();
-    const filename = `tomaai-${prompt.replace(/[^a-zA-Z0-9]/g, '-').substring(0, 30)}-${timestamp}.png`;
-    
-    // Upload to Supabase Storage
-    const { data, error } = await supabase.storage
-      .from('generated-images')
-      .upload(filename, blob, {
-        contentType: 'image/png',
-        upsert: false
-      });
-    
-    if (error) {
-      console.error('Error uploading to Supabase:', error);
-      // Fallback to the original URL
-      return imageUrl;
-    }
-    
-    // Get the public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from('generated-images')
-      .getPublicUrl(filename);
-    
-    return publicUrl;
+    // TODO: Implement server-side image download to avoid CORS issues
+    // This would require a backend endpoint that downloads the image server-side
+    // and then uploads it to Supabase Storage
     
   } catch (error) {
     console.error('Error storing image:', error);
@@ -45,6 +21,12 @@ export async function downloadAndStoreImage(imageUrl: string, prompt: string, st
 
 export async function createStorageBucket(): Promise<void> {
   try {
+    // Temporarily skip bucket creation due to RLS policy issues
+    console.log('Skipping storage bucket creation due to RLS policy issues');
+    return;
+    
+    // TODO: Fix RLS policies and re-enable storage
+    /*
     const { data, error } = await supabase.storage.createBucket('generated-images', {
       public: true,
       allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
@@ -54,6 +36,7 @@ export async function createStorageBucket(): Promise<void> {
     if (error && !error.message.includes('already exists')) {
       console.error('Error creating storage bucket:', error);
     }
+    */
   } catch (error) {
     console.error('Error setting up storage:', error);
   }
