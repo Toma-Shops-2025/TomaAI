@@ -218,8 +218,12 @@ export default function AppLayout() {
     document.body.removeChild(link);
   };
 
-  const handleVariation = () => {
-    alert('Creating variation... (This would generate a similar image)');
+  const handleVariation = (originalPrompt: string, originalStyle: string) => {
+    // Create a variation prompt by adding variation keywords
+    const variationPrompt = `${originalPrompt}, variation, similar but different, alternative version`;
+    
+    // Use the same generation logic but with the variation prompt
+    handleGenerate(variationPrompt, '', originalStyle, aspectRatio, quality, 1);
   };
 
   const handleEmailCollection = (email: string) => {

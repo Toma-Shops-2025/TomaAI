@@ -5,7 +5,7 @@ interface ImageCardProps {
   prompt: string;
   style: string;
   onDownload: (imageUrl: string, prompt: string) => void;
-  onVariation: () => void;
+  onVariation: (prompt: string, style: string) => void;
 }
 
 export default function ImageCard({ src, prompt, style, onDownload, onVariation }: ImageCardProps) {
@@ -40,7 +40,7 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation 
               Download
             </button>
             <button
-              onClick={onVariation}
+              onClick={() => onVariation(prompt, style)}
               className="flex-1 bg-slate-600 hover:bg-slate-700 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors"
             >
               Variation
