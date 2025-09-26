@@ -25,11 +25,11 @@ export default function PublicGallery() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock gallery data
+      // Mock gallery data using actual style images
       const mockImages: GalleryImage[] = [
         {
           id: '1',
-          src: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=400&h=400&fit=crop',
+          src: '/images/styles/fantasy-sample.png',
           prompt: 'A majestic dragon flying over a mystical forest',
           style: 'fantasy',
           author: 'CreativeUser123',
@@ -38,7 +38,7 @@ export default function PublicGallery() {
         },
         {
           id: '2',
-          src: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop',
+          src: '/images/styles/cyberpunk-sample.png',
           prompt: 'Cyberpunk cityscape with neon lights',
           style: 'cyberpunk',
           author: 'TechArtist',
@@ -47,7 +47,7 @@ export default function PublicGallery() {
         },
         {
           id: '3',
-          src: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=400&fit=crop',
+          src: '/images/styles/abstract-sample.png',
           prompt: 'Abstract geometric patterns in vibrant colors',
           style: 'abstract',
           author: 'AbstractMind',
