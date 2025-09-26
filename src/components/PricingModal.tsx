@@ -86,12 +86,12 @@ export default function PricingModal() {
           View Pricing
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-slate-800 border-slate-700">
         <DialogHeader>
-          <DialogTitle className="text-3xl font-bold text-center">
+          <DialogTitle className="text-3xl font-bold text-center text-white">
             Choose Your Plan
           </DialogTitle>
-          <DialogDescription className="text-center text-lg">
+          <DialogDescription className="text-center text-lg text-slate-300">
             Start with a 3-day free trial for any plan. No credit card required.
           </DialogDescription>
         </DialogHeader>
@@ -100,10 +100,10 @@ export default function PricingModal() {
           {pricingTiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative bg-white rounded-2xl p-8 shadow-lg border-2 transition-all duration-200 hover:shadow-xl ${
+              className={`relative bg-slate-700 rounded-2xl p-8 shadow-lg border-2 transition-all duration-200 hover:shadow-xl ${
                 tier.popular 
-                  ? 'border-blue-500 scale-105' 
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-cyan-500 scale-105' 
+                  : 'border-slate-600 hover:border-slate-500'
               }`}
             >
               {tier.popular && (
@@ -116,13 +116,13 @@ export default function PricingModal() {
               )}
               
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{tier.name}</h3>
-                <p className="text-gray-600 mb-4">{tier.description}</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{tier.name}</h3>
+                <p className="text-slate-300 mb-4">{tier.description}</p>
                 <div className="mb-4">
-                  <span className="text-4xl font-bold text-gray-900">${tier.price}</span>
-                  <span className="text-gray-600">/month</span>
+                  <span className="text-4xl font-bold text-white">${tier.price}</span>
+                  <span className="text-slate-300">/month</span>
                 </div>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <Badge variant="secondary" className="bg-green-600 text-white">
                   3-day free trial
                 </Badge>
               </div>
@@ -131,7 +131,7 @@ export default function PricingModal() {
                 {tier.features.map((feature, index) => (
                   <li key={index} className="flex items-start">
                     <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{feature}</span>
+                    <span className="text-gray-300">{feature}</span>
                   </li>
                 ))}
               </ul>

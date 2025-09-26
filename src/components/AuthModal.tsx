@@ -47,22 +47,22 @@ export default function AuthModal() {
       <DialogTrigger asChild>
         <Button variant="outline">Sign In</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] bg-slate-800 border-slate-700">
         <DialogHeader>
-          <DialogTitle>Welcome to TomaAI</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Welcome to TomaAI</DialogTitle>
+          <DialogDescription className="text-gray-300">
             Sign in to save your generated images and access your gallery.
           </DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="signin" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="signin">Sign In</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 bg-slate-700">
+            <TabsTrigger value="signin" className="text-white data-[state=active]:bg-cyan-600 data-[state=active]:text-white">Sign In</TabsTrigger>
+            <TabsTrigger value="signup" className="text-white data-[state=active]:bg-cyan-600 data-[state=active]:text-white">Sign Up</TabsTrigger>
           </TabsList>
           <TabsContent value="signin">
             <form onSubmit={handleSignIn} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="signin-email">Email</Label>
+                <Label htmlFor="signin-email" className="text-white">Email</Label>
                 <Input
                   id="signin-email"
                   type="email"
@@ -72,7 +72,7 @@ export default function AuthModal() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="signin-password">Password</Label>
+                <Label htmlFor="signin-password" className="text-white">Password</Label>
                 <Input
                   id="signin-password"
                   type="password"
@@ -89,7 +89,7 @@ export default function AuthModal() {
           <TabsContent value="signup">
             <form onSubmit={handleSignUp} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="signup-email">Email</Label>
+                <Label htmlFor="signup-email" className="text-white">Email</Label>
                 <Input
                   id="signup-email"
                   type="email"
@@ -99,7 +99,7 @@ export default function AuthModal() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="signup-password">Password</Label>
+                <Label htmlFor="signup-password" className="text-white">Password</Label>
                 <Input
                   id="signup-password"
                   type="password"
