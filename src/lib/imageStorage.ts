@@ -48,7 +48,12 @@ export async function downloadAndStoreImage(imageUrl: string, prompt: string, st
 
 export async function createStorageBucket(): Promise<void> {
   try {
-    // Try to create the bucket
+    // Temporarily disable storage until bucket is created via dashboard
+    console.log('Storage disabled - please create "generated-images" bucket in Supabase Dashboard');
+    return;
+
+    // Uncomment this after creating the bucket via dashboard:
+    /*
     const { data, error } = await supabase.storage.createBucket('generated-images', {
       public: true,
       allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
@@ -57,12 +62,11 @@ export async function createStorageBucket(): Promise<void> {
 
     if (error && !error.message.includes('already exists')) {
       console.error('Error creating storage bucket:', error);
-      console.log('Please run the SQL script in supabase-storage-fix.sql to fix RLS policies');
     } else {
       console.log('Storage bucket ready');
     }
+    */
   } catch (error) {
     console.error('Error setting up storage:', error);
-    console.log('Please run the SQL script in supabase-storage-fix.sql to fix RLS policies');
   }
 }
