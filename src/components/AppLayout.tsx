@@ -400,9 +400,9 @@ export default function AppLayout() {
                   {savedImages.map((image) => (
                     <ImageCard
                       key={image.id}
-                      src={image.image_url}
-                      prompt={image.prompt}
-                      style={image.style}
+                      src={image.image_url || image.src || ''}
+                      prompt={image.prompt || ''}
+                      style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                       onVariation={handleVariation}
                     />
@@ -419,9 +419,9 @@ export default function AppLayout() {
                   {generatedImages.map((image, index) => (
                     <ImageCard
                       key={index}
-                      src={image.src}
-                      prompt={image.prompt}
-                      style={image.style}
+                      src={image.src || image.image_url || ''}
+                      prompt={image.prompt || ''}
+                      style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                       onVariation={handleVariation}
                     />

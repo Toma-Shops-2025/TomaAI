@@ -11,6 +11,17 @@ interface ImageCardProps {
 export default function ImageCard({ src, prompt, style, onDownload, onVariation }: ImageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Safety checks
+  if (!src || !prompt || !style) {
+    return (
+      <div className="relative group bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 p-4">
+        <div className="w-full h-64 bg-slate-700 flex items-center justify-center">
+          <span className="text-gray-400">Invalid image data</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className="relative group bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-slate-700"
@@ -21,6 +32,9 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation 
         src={src} 
         alt={prompt}
         className="w-full h-64 object-cover"
+        onError={(e) => {
+          e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzM0MTU1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5YTNhZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIEVycm9yPC90ZXh0Pjwvc3ZnPg==';
+        }}
       />
       
       {isHovered && (
