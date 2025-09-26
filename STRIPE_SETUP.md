@@ -78,7 +78,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     price: 9,
     features: ['50 images/month', 'All styles', 'High quality', '3-day free trial'],
     maxImages: 50,
-    stripePriceId: 'price_1234567890' // Replace with actual ID
+    stripePriceId: 'price_1SBZPwALNbqU5KpqrZAra2eJ' // Replace with actual ID
   },
   // ... update all price IDs
 ]

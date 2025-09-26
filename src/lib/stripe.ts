@@ -20,7 +20,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     price: 9,
     features: ['50 images/month', 'All styles', 'High quality', '3-day free trial'],
     maxImages: 50,
-    stripePriceId: 'price_starter_monthly' // You'll replace this with actual Stripe price IDs
+    stripePriceId: 'price_1SBZPwALNbqU5KpqrZAra2eJ' // You'll replace this with actual Stripe price IDs
   },
   {
     id: 'pro',
@@ -28,7 +28,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     price: 15,
     features: ['200 images/month', 'All styles', 'Ultra HD', 'Priority support', '3-day free trial'],
     maxImages: 200,
-    stripePriceId: 'price_pro_monthly'
+    stripePriceId: 'price_1SBaDMALNbqU5KpqK0ZMYxlf'
   },
   {
     id: 'enterprise',
@@ -36,7 +36,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     price: 49,
     features: ['Unlimited images', 'All styles', 'Ultra HD', 'API access', '3-day free trial'],
     maxImages: -1, // Unlimited
-    stripePriceId: 'price_enterprise_monthly'
+    stripePriceId: 'price_1SBaJ3ALNbqU5Kpq5Fmp9asi'
   }
 ]
 
