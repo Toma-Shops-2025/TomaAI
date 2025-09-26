@@ -53,10 +53,10 @@ export default function AppLayout() {
   };
 
   const stylePresets = [
-    { name: 'Photorealistic', description: 'Lifelike photos', previewImage: sampleImages[0].src },
-    { name: 'Abstract', description: 'Modern art', previewImage: sampleImages[3].src },
-    { name: 'Anime', description: 'Japanese animation', previewImage: sampleImages[7].src },
-    { name: 'Artistic', description: 'Traditional art', previewImage: sampleImages[10].src }
+    { name: 'Photorealistic', description: 'Lifelike photos', previewImage: sampleImages[0]?.src || '' },
+    { name: 'Abstract', description: 'Modern art', previewImage: sampleImages[3]?.src || '' },
+    { name: 'Anime', description: 'Japanese animation', previewImage: sampleImages[7]?.src || '' },
+    { name: 'Artistic', description: 'Traditional art', previewImage: sampleImages[10]?.src || '' }
   ];
 
   // Load saved images on component mount
@@ -161,7 +161,7 @@ export default function AppLayout() {
               style: selectedStyle,
               aspect_ratio: aspectRatio,
               quality,
-              image_url: image.src
+              image_url: image.src || ''
             });
           }
         }
@@ -185,7 +185,7 @@ export default function AppLayout() {
             style: selectedStyle,
             aspect_ratio: aspectRatio,
             quality,
-            image_url: fallbackImage.src
+            image_url: fallbackImage.src || ''
           });
         }
       }
@@ -445,9 +445,9 @@ export default function AppLayout() {
                 {sampleImages.map((image) => (
                   <div key={image.id} className="relative group">
                     <ImageCard
-                      src={image.src}
-                      prompt={image.prompt}
-                      style={image.style}
+                      src={image.src || ''}
+                      prompt={image.prompt || ''}
+                      style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                       onVariation={handleVariation}
                     />
