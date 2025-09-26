@@ -255,7 +255,7 @@ export default function AppLayout() {
             <img 
               src="/icon-512x512.png" 
               alt="TomaAI" 
-              className="h-8 w-auto"
+              className="h-32 w-auto"
             />
           </div>
           <div className="flex items-center gap-4">
