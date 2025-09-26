@@ -164,6 +164,9 @@ export default function AppLayout() {
               image_url: image.src || ''
             });
           }
+          // Reload saved images to update the counter
+          const savedImages = await getGeneratedImages();
+          setSavedImages(savedImages);
         }
       } else {
         // Fallback to sample images if API fails
@@ -187,6 +190,9 @@ export default function AppLayout() {
             quality,
             image_url: fallbackImage.src || ''
           });
+          // Reload saved images to update the counter
+          const savedImages = await getGeneratedImages();
+          setSavedImages(savedImages);
         }
       }
     } catch (error) {
@@ -199,6 +205,22 @@ export default function AppLayout() {
       };
       
       setGeneratedImages(prev => [fallbackImage, ...prev]);
+      
+      // Save to Supabase if user is logged in
+      if (user) {
+        await saveGeneratedImage({
+          user_id: user.id,
+          prompt,
+          negative_prompt: negativePrompt,
+          style: selectedStyle,
+          aspect_ratio: aspectRatio,
+          quality,
+          image_url: fallbackImage.src || ''
+        });
+        // Reload saved images to update the counter
+        const savedImages = await getGeneratedImages();
+        setSavedImages(savedImages);
+      }
     } finally {
       // Clear intervals
       clearInterval(progressInterval);
