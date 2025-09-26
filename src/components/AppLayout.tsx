@@ -84,21 +84,21 @@ export default function AppLayout() {
   }, []);
 
   const handleGenerate = async (prompt: string, negativePrompt: string) => {
-    // Check subscription status
-    if (user) {
-      const canGenerate = canGenerateImage(userSubscription.tier, userSubscription.imagesUsed);
-      const isTrial = isTrialActive(userSubscription.trialEndsAt);
-      
-      if (!canGenerate && !isTrial) {
-        alert('You have reached your image limit. Please upgrade your plan to generate more images.');
-        return;
-      }
-    } else {
-      // For non-logged in users, check if they've provided email for free images
-      if (!userSubscription.emailCollected && generatedImages.length >= 3) {
-        alert('Please provide your email to continue generating free images or sign up for a plan.');
-        return;
-      }
+    // Require authentication for image generation
+    if (!user) {
+      alert('Please sign in to generate images. You can create a free account to get started.');
+      setShowAuthModal(true);
+      return;
+    }
+
+    // Check subscription status for authenticated users
+    const canGenerate = canGenerateImage(userSubscription.tier, userSubscription.imagesUsed);
+    const isTrial = isTrialActive(userSubscription.trialEndsAt);
+    
+    if (!canGenerate && !isTrial) {
+      alert('You have reached your image limit. Please upgrade your plan to generate more images.');
+      setShowPricingModal(true);
+      return;
     }
     
     setIsGenerating(true);
@@ -396,22 +396,47 @@ export default function AppLayout() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Generation */}
           <div className="lg:col-span-2 space-y-8">
-            <PromptInput 
-              onGenerate={handleGenerate} 
-              isGenerating={isGenerating}
-              userTier={userSubscription.tier}
-              imagesUsed={userSubscription.imagesUsed}
-              maxImages={userSubscription.tier === 'free' ? 3 : userSubscription.tier === 'enterprise' ? -1 : userSubscription.tier === 'starter' ? 50 : 200}
-              generationProgress={generationProgress}
-              generationStatus={generationStatus}
-              onEmailCollection={handleEmailCollection}
-            />
-            
-            <StyleSelector
-              selectedStyle={selectedStyle}
-              onStyleChange={setSelectedStyle}
-              disabled={isGenerating}
-            />
+            {!user ? (
+              <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
+                <div className="mb-6">
+                  <img
+                    src="/icon-512x512.png"
+                    alt="TomaAI"
+                    className="h-16 w-16 mx-auto mb-4"
+                  />
+                  <h3 className="text-2xl font-bold text-white mb-2">Welcome to TomaAI</h3>
+                  <p className="text-gray-300 mb-6">
+                    Create stunning AI-generated images with our advanced technology. 
+                    Sign in to get started with 3 free images!
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-md transition-all transform hover:scale-105"
+                >
+                  Sign In to Get Started
+                </button>
+              </div>
+            ) : (
+              <>
+                <PromptInput 
+                  onGenerate={handleGenerate} 
+                  isGenerating={isGenerating}
+                  userTier={userSubscription.tier}
+                  imagesUsed={userSubscription.imagesUsed}
+                  maxImages={userSubscription.tier === 'free' ? 3 : userSubscription.tier === 'enterprise' ? -1 : userSubscription.tier === 'starter' ? 50 : 200}
+                  generationProgress={generationProgress}
+                  generationStatus={generationStatus}
+                  onEmailCollection={handleEmailCollection}
+                />
+                
+                <StyleSelector
+                  selectedStyle={selectedStyle}
+                  onStyleChange={setSelectedStyle}
+                  disabled={isGenerating}
+                />
+              </>
+            )}
           </div>
 
           {/* Right Column - Controls */}
@@ -520,26 +545,70 @@ export default function AppLayout() {
         {/* Background Removal Tab */}
         {activeTab === 'background' && (
           <div className="max-w-2xl mx-auto">
-            <BackgroundRemoval 
-              onImageProcessed={(imageUrl) => {
-                // Handle processed image
-                console.log('Background removed:', imageUrl);
-              }}
-              disabled={isGenerating}
-            />
+            {!user ? (
+              <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
+                <div className="mb-6">
+                  <img
+                    src="/icon-512x512.png"
+                    alt="TomaAI"
+                    className="h-16 w-16 mx-auto mb-4"
+                  />
+                  <h3 className="text-2xl font-bold text-white mb-2">Sign In Required</h3>
+                  <p className="text-gray-300 mb-6">
+                    Please sign in to use the background removal feature.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-md transition-all transform hover:scale-105"
+                >
+                  Sign In
+                </button>
+              </div>
+            ) : (
+              <BackgroundRemoval 
+                onImageProcessed={(imageUrl) => {
+                  // Handle processed image
+                  console.log('Background removed:', imageUrl);
+                }}
+                disabled={isGenerating}
+              />
+            )}
           </div>
         )}
 
         {/* Image-to-Image Tab */}
         {activeTab === 'image-to-image' && (
           <div className="max-w-2xl mx-auto">
-            <ImageToImage 
-              onImageGenerated={(imageUrl, prompt) => {
-                // Handle generated image
-                console.log('Generated from image:', imageUrl, prompt);
-              }}
-              disabled={isGenerating}
-            />
+            {!user ? (
+              <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
+                <div className="mb-6">
+                  <img
+                    src="/icon-512x512.png"
+                    alt="TomaAI"
+                    className="h-16 w-16 mx-auto mb-4"
+                  />
+                  <h3 className="text-2xl font-bold text-white mb-2">Sign In Required</h3>
+                  <p className="text-gray-300 mb-6">
+                    Please sign in to use the image-to-image generation feature.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAuthModal(true)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-md transition-all transform hover:scale-105"
+                >
+                  Sign In
+                </button>
+              </div>
+            ) : (
+              <ImageToImage 
+                onImageGenerated={(imageUrl, prompt) => {
+                  // Handle generated image
+                  console.log('Generated from image:', imageUrl, prompt);
+                }}
+                disabled={isGenerating}
+              />
+            )}
           </div>
         )}
 
