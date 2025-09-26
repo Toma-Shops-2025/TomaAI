@@ -1,3 +1,0 @@
-[33m64cb929[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Remove .env file from tracking and update .gitignore for security
-[33m143d239[m Fix TypeScript errors and finalize Supabase integration
-[33me118651[m[33m ([m[1;31morigin/main[m[33m)[m Add pricing tiers and complete Supabase integration
