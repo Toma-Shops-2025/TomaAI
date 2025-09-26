@@ -16,6 +16,10 @@ export default function PublicGallery() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
 
+  const removeGalleryImage = (id: string) => {
+    setImages(prev => prev.filter(img => img.id !== id));
+  };
+
   useEffect(() => {
     // Simulate loading public gallery images
     // In a real implementation, you'd fetch from your database
@@ -117,7 +121,7 @@ export default function PublicGallery() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredImages.map((image) => (
-          <div key={image.id} className="bg-slate-700 rounded-lg overflow-hidden">
+          <div key={image.id} className="bg-slate-700 rounded-lg overflow-hidden relative group">
             <ImageCard
               src={image.src}
               prompt={image.prompt}
@@ -125,6 +129,13 @@ export default function PublicGallery() {
               onDownload={handleDownload}
               onVariation={handleVariation}
             />
+            <button
+              onClick={() => removeGalleryImage(image.id)}
+              className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity z-10"
+              title="Remove from gallery"
+            >
+              ×
+            </button>
             <div className="p-3">
               <div className="flex justify-between items-center text-sm text-gray-300">
                 <span>by {image.author}</span>

@@ -251,9 +251,16 @@ export default function AppLayout() {
       {/* Header */}
       <div className="bg-slate-800 border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">
-            Toma<span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">AI</span>
-          </h1>
+          <div className="flex items-center">
+            <img 
+              src="/icon-192x192.png" 
+              alt="TomaAI" 
+              className="w-8 h-8 mr-3"
+            />
+            <h1 className="text-2xl font-bold text-white">
+              Toma<span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">AI</span>
+            </h1>
+          </div>
           <div className="flex items-center gap-4">
             {user && (
               <div className="flex items-center gap-3">
