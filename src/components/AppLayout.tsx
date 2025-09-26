@@ -39,20 +39,18 @@ export default function AppLayout() {
 
   const heroImage = "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798663042_bb4db978.webp";
 
-  const sampleImages = [
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798664450_707e4044.webp", prompt: "Professional portrait with studio lighting", style: "Photorealistic" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798666349_af2b315f.webp", prompt: "Elegant woman with flowing hair", style: "Photorealistic" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798669968_cfa053e4.png", prompt: "Artistic portrait photography", style: "Photorealistic" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798670734_a3f481a4.webp", prompt: "Colorful geometric abstract art", style: "Abstract" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798672458_e88f61af.webp", prompt: "Modern digital art composition", style: "Abstract" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798674959_dc7acc81.webp", prompt: "Vibrant abstract patterns", style: "Abstract" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798676677_dc380a77.webp", prompt: "Geometric shapes and colors", style: "Abstract" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798677373_64253ec6.webp", prompt: "Anime character illustration", style: "Anime" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798679083_ff833edc.webp", prompt: "Detailed anime artwork", style: "Anime" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798680807_fbde0029.webp", prompt: "Colorful anime style character", style: "Anime" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798681591_dc98035f.webp", prompt: "Impressionist landscape painting", style: "Artistic" },
-    { src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798683320_fa3a7f3f.webp", prompt: "Traditional art style landscape", style: "Artistic" }
-  ];
+  const [sampleImages, setSampleImages] = useState([
+    { id: 1, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798664450_707e4044.webp", prompt: "Professional portrait with studio lighting", style: "Photorealistic" },
+    { id: 2, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798666349_af2b315f.webp", prompt: "Elegant woman with flowing hair", style: "Photorealistic" },
+    { id: 3, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798669968_cfa053e4.png", prompt: "Artistic portrait photography", style: "Photorealistic" },
+    { id: 4, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798670734_a3f481a4.webp", prompt: "Colorful geometric abstract art", style: "Abstract" },
+    { id: 5, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798672458_e88f61af.webp", prompt: "Modern digital art composition", style: "Abstract" },
+    { id: 6, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798674959_dc7acc81.webp", prompt: "Vibrant abstract patterns", style: "Abstract" }
+  ]);
+
+  const removeSampleImage = (id: number) => {
+    setSampleImages(prev => prev.filter(img => img.id !== id));
+  };
 
   const stylePresets = [
     { name: 'Photorealistic', description: 'Lifelike photos', previewImage: sampleImages[0].src },
@@ -393,62 +391,96 @@ export default function AppLayout() {
               onNumImagesChange={setNumImages}
             />
           </div>
-        </div>
-
-        {/* Saved Images for logged-in users */}
-        {user && savedImages.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-white font-semibold text-2xl mb-6">Your Saved Images</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {savedImages.map((image) => (
-                <ImageCard
-                  key={image.id}
-                  src={image.image_url}
-                  prompt={image.prompt}
-                  style={image.style}
-                  onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
-                  onVariation={handleVariation}
-                />
-              ))}
             </div>
-          </div>
-        )}
 
-        {/* Generated Images */}
-        {generatedImages.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-white font-semibold text-2xl mb-6">Your Generated Images</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {generatedImages.map((image, index) => (
-                <ImageCard
-                  key={index}
-                  src={image.src}
-                  prompt={image.prompt}
-                  style={image.style}
-                  onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
-                  onVariation={handleVariation}
-                />
-              ))}
+            {/* Saved Images for logged-in users */}
+            {user && savedImages.length > 0 && (
+              <div className="mt-12">
+                <h3 className="text-white font-semibold text-2xl mb-6">Your Saved Images</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {savedImages.map((image) => (
+                    <ImageCard
+                      key={image.id}
+                      src={image.image_url}
+                      prompt={image.prompt}
+                      style={image.style}
+                      onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
+                      onVariation={handleVariation}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Generated Images */}
+            {generatedImages.length > 0 && (
+              <div className="mt-12">
+                <h3 className="text-white font-semibold text-2xl mb-6">Your Generated Images</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {generatedImages.map((image, index) => (
+                    <ImageCard
+                      key={index}
+                      src={image.src}
+                      prompt={image.prompt}
+                      style={image.style}
+                      onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
+                      onVariation={handleVariation}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sample Gallery */}
+            <div className="mt-12">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-white font-semibold text-2xl">Explore AI-Generated Art</h3>
+                <button
+                  onClick={() => setSampleImages([])}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Clear All Samples
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {sampleImages.map((image) => (
+                  <div key={image.id} className="relative group">
+                    <ImageCard
+                      src={image.src}
+                      prompt={image.prompt}
+                      style={image.style}
+                      onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
+                      onVariation={handleVariation}
+                    />
+                    <button
+                      onClick={() => removeSampleImage(image.id)}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Remove this sample"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {sampleImages.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-400">No sample images to display.</p>
+                  <button
+                    onClick={() => setSampleImages([
+                      { id: 1, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798664450_707e4044.webp", prompt: "Professional portrait with studio lighting", style: "Photorealistic" },
+                      { id: 2, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798666349_af2b315f.webp", prompt: "Elegant woman with flowing hair", style: "Photorealistic" },
+                      { id: 3, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798669968_cfa053e4.png", prompt: "Artistic portrait photography", style: "Photorealistic" },
+                      { id: 4, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798670734_a3f481a4.webp", prompt: "Colorful geometric abstract art", style: "Abstract" },
+                      { id: 5, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798672458_e88f61af.webp", prompt: "Modern digital art composition", style: "Abstract" },
+                      { id: 6, src: "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798674959_dc7acc81.webp", prompt: "Vibrant abstract patterns", style: "Abstract" }
+                    ])}
+                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    Restore Sample Images
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-
-        {/* Sample Gallery */}
-        <div className="mt-12">
-          <h3 className="text-white font-semibold text-2xl mb-6">Explore AI-Generated Art</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {sampleImages.map((image, index) => (
-              <ImageCard
-                key={index}
-                src={image.src}
-                prompt={image.prompt}
-                style={image.style}
-                onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
-                onVariation={handleVariation}
-              />
-            ))}
-          </div>
-        </div>
           </div>
         )}
 
