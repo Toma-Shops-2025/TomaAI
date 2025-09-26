@@ -35,6 +35,8 @@ export default function AppLayout() {
   const [generationProgress, setGenerationProgress] = useState(0);
   const [generationStatus, setGenerationStatus] = useState('');
   const [showExtendedPricing, setShowExtendedPricing] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showPricingModal, setShowPricingModal] = useState(false);
   const [activeTab, setActiveTab] = useState('generate');
 
   const heroImage = "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798663042_bb4db978.webp";
@@ -72,11 +74,18 @@ export default function AppLayout() {
 
   // Update imagesUsed count when savedImages changes
   useEffect(() => {
+    // Cap the imagesUsed at the tier limit to prevent display issues
+    const tierLimit = userSubscription.tier === 'free' ? 3 : 
+                     userSubscription.tier === 'starter' ? 50 : 
+                     userSubscription.tier === 'pro' ? 200 : -1;
+    
+    const actualUsed = Math.min(savedImages.length, tierLimit === -1 ? savedImages.length : tierLimit);
+    
     setUserSubscription(prev => ({
       ...prev,
-      imagesUsed: savedImages.length
+      imagesUsed: actualUsed
     }));
-  }, [savedImages]);
+  }, [savedImages, userSubscription.tier]);
 
   // Initialize storage bucket
   useEffect(() => {
@@ -145,15 +154,22 @@ export default function AppLayout() {
         setGenerationStatus('Image generated successfully!');
         
         // Store images permanently and use real generated images
-        const newImages = [];
+        const newImages: GeneratedImage[] = [];
         for (const imageUrl of result.images) {
           // Download and store the image permanently
           const permanentUrl = await downloadAndStoreImage(imageUrl, prompt, selectedStyle);
           
           newImages.push({
-            src: permanentUrl,
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            user_id: user?.id,
             prompt,
-            style: selectedStyle
+            negative_prompt: negativePrompt,
+            style: selectedStyle,
+            aspect_ratio: aspectRatio,
+            quality,
+            image_url: permanentUrl,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
           });
         }
         
@@ -169,7 +185,7 @@ export default function AppLayout() {
               style: selectedStyle,
               aspect_ratio: aspectRatio,
               quality,
-              image_url: image.src || ''
+              image_url: image.image_url || ''
             });
           }
           // Reload saved images to update the counter
@@ -179,10 +195,17 @@ export default function AppLayout() {
       } else {
         // Fallback to sample images if API fails
         console.warn('API generation failed, using sample images:', result.error);
-        const fallbackImage = {
-          src: getSampleImage(),
+        const fallbackImage: GeneratedImage = {
+          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+          user_id: user?.id,
           prompt,
-          style: selectedStyle
+          negative_prompt: negativePrompt,
+          style: selectedStyle,
+          aspect_ratio: aspectRatio,
+          quality,
+          image_url: getSampleImage(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         };
         
         setGeneratedImages(prev => [fallbackImage, ...prev]);
@@ -196,7 +219,7 @@ export default function AppLayout() {
             style: selectedStyle,
             aspect_ratio: aspectRatio,
             quality,
-            image_url: fallbackImage.src || ''
+            image_url: fallbackImage.image_url || ''
           });
           // Reload saved images to update the counter
           const savedImages = await getGeneratedImages();
@@ -206,10 +229,17 @@ export default function AppLayout() {
     } catch (error) {
       console.error('Generation error:', error);
       // Fallback to sample images
-      const fallbackImage = {
-        src: getSampleImage(),
+      const fallbackImage: GeneratedImage = {
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        user_id: user?.id,
         prompt,
-        style: selectedStyle
+        negative_prompt: negativePrompt,
+        style: selectedStyle,
+        aspect_ratio: aspectRatio,
+        quality,
+        image_url: getSampleImage(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       };
       
       setGeneratedImages(prev => [fallbackImage, ...prev]);
@@ -223,7 +253,7 @@ export default function AppLayout() {
           style: selectedStyle,
           aspect_ratio: aspectRatio,
           quality,
-          image_url: fallbackImage.src || ''
+          image_url: fallbackImage.image_url || ''
         });
         // Reload saved images to update the counter
         const savedImages = await getGeneratedImages();
@@ -258,7 +288,7 @@ export default function AppLayout() {
     const variationPrompt = `${originalPrompt}, variation, similar but different, alternative version`;
     
     // Use the same generation logic but with the variation prompt
-    handleGenerate(variationPrompt, '', originalStyle, aspectRatio, quality, 1);
+    handleGenerate(variationPrompt, '');
   };
 
   const handleEmailCollection = (email: string) => {
@@ -338,7 +368,7 @@ export default function AppLayout() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-12 overflow-x-hidden">
         {/* Feature Tabs */}
         <div className="mb-8">
           <div className="flex flex-wrap gap-2 mb-6">
@@ -393,7 +423,7 @@ export default function AppLayout() {
 
         {/* Tab Content */}
         {activeTab === 'generate' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 overflow-x-hidden">
           {/* Left Column - Generation */}
           <div className="lg:col-span-2 space-y-8">
             {!user ? (
@@ -459,7 +489,7 @@ export default function AppLayout() {
                   {savedImages.map((image) => (
                     <ImageCard
                       key={image.id}
-                      src={image.image_url || image.src || ''}
+                      src={image.image_url || ''}
                       prompt={image.prompt || ''}
                       style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
@@ -478,7 +508,7 @@ export default function AppLayout() {
                   {generatedImages.map((image, index) => (
                     <ImageCard
                       key={index}
-                      src={image.src || image.image_url || ''}
+                      src={image.image_url || ''}
                       prompt={image.prompt || ''}
                       style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}

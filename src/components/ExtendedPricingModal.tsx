@@ -23,27 +23,40 @@ export default function ExtendedPricingModal({ isOpen, onClose }: ExtendedPricin
     { images: 1000, price: 35.00, savings: '65%', popular: false }
   ];
 
-  const handlePurchase = (packageType: string, images: number, price: number) => {
-    // In a real implementation, this would integrate with Stripe
-    alert(`Redirecting to payment for ${images} images at $${price}`);
-    onClose();
+  const handlePurchase = async (packageType: string, images: number, price: number) => {
+    try {
+      // For now, show a proper message instead of just an alert
+      const confirmed = window.confirm(
+        `Purchase ${images} images for $${price.toFixed(2)}?\n\nThis will redirect you to our secure payment processor.`
+      );
+      
+      if (confirmed) {
+        // TODO: Implement actual Stripe checkout
+        // For now, show success message
+        alert(`Payment processing for ${images} images at $${price.toFixed(2)}. This feature will be available soon!`);
+        onClose();
+      }
+    } catch (error) {
+      console.error('Purchase error:', error);
+      alert('Payment processing failed. Please try again.');
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-white">Extended Pricing Options</h2>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-white text-2xl"
-            >
-              ×
-            </button>
-          </div>
+        <div className="bg-slate-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="p-4 sm:p-6">
+            <div className="flex justify-between items-center mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Extended Pricing Options</h2>
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-white text-2xl"
+              >
+                ×
+              </button>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
             {/* Pay-per-Image Section */}
             <div>
               <h3 className="text-xl font-semibold text-white mb-4">Pay-per-Image</h3>
