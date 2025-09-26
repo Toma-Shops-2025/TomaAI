@@ -12,6 +12,10 @@ import { downloadAndStoreImage, createStorageBucket } from '@/lib/imageStorage';
 import { generateImages, getSampleImage } from '@/lib/openai';
 import { canGenerateImage, getRemainingImages, isTrialActive } from '@/lib/subscription';
 import FloatingHomeButton from './FloatingHomeButton';
+import BackgroundRemoval from './BackgroundRemoval';
+import ImageToImage from './ImageToImage';
+import PublicGallery from './PublicGallery';
+import ExtendedPricingModal from './ExtendedPricingModal';
 
 export default function AppLayout() {
   const { user, saveGeneratedImage, getGeneratedImages, signOut } = useSupabase();
@@ -30,6 +34,8 @@ export default function AppLayout() {
   });
   const [generationProgress, setGenerationProgress] = useState(0);
   const [generationStatus, setGenerationStatus] = useState('');
+  const [showExtendedPricing, setShowExtendedPricing] = useState(false);
+  const [activeTab, setActiveTab] = useState('generate');
 
   const heroImage = "https://d64gsuwffb70l.cloudfront.net/68d523187440d1c92f1c0b02_1758798663042_bb4db978.webp";
 
@@ -301,7 +307,61 @@ export default function AppLayout() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Feature Tabs */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              onClick={() => setActiveTab('generate')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                activeTab === 'generate'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+              }`}
+            >
+              Generate Images
+            </button>
+            <button
+              onClick={() => setActiveTab('background')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                activeTab === 'background'
+                  ? 'bg-green-600 text-white'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+              }`}
+            >
+              Remove Background
+            </button>
+            <button
+              onClick={() => setActiveTab('image-to-image')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                activeTab === 'image-to-image'
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+              }`}
+            >
+              Image-to-Image
+            </button>
+            <button
+              onClick={() => setActiveTab('gallery')}
+              className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                activeTab === 'gallery'
+                  ? 'bg-orange-600 text-white'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+              }`}
+            >
+              Community Gallery
+            </button>
+            <button
+              onClick={() => setShowExtendedPricing(true)}
+              className="px-4 py-2 rounded-md font-medium bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-700 hover:to-blue-700 transition-all"
+            >
+              Extended Pricing
+            </button>
+          </div>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === 'generate' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Generation */}
           <div className="lg:col-span-2 space-y-8">
             <PromptInput 
@@ -389,10 +449,49 @@ export default function AppLayout() {
             ))}
           </div>
         </div>
+          </div>
+        )}
+
+        {/* Background Removal Tab */}
+        {activeTab === 'background' && (
+          <div className="max-w-2xl mx-auto">
+            <BackgroundRemoval 
+              onImageProcessed={(imageUrl) => {
+                // Handle processed image
+                console.log('Background removed:', imageUrl);
+              }}
+              disabled={isGenerating}
+            />
+          </div>
+        )}
+
+        {/* Image-to-Image Tab */}
+        {activeTab === 'image-to-image' && (
+          <div className="max-w-2xl mx-auto">
+            <ImageToImage 
+              onImageGenerated={(imageUrl, prompt) => {
+                // Handle generated image
+                console.log('Generated from image:', imageUrl, prompt);
+              }}
+              disabled={isGenerating}
+            />
+          </div>
+        )}
+
+        {/* Community Gallery Tab */}
+        {activeTab === 'gallery' && (
+          <PublicGallery />
+        )}
       </div>
       
       {/* Floating Home Button */}
       <FloatingHomeButton />
+      
+      {/* Extended Pricing Modal */}
+      <ExtendedPricingModal 
+        isOpen={showExtendedPricing}
+        onClose={() => setShowExtendedPricing(false)}
+      />
     </div>
   );
 }
