@@ -3,41 +3,66 @@ import { supabase } from './supabase';
 
 export async function downloadAndStoreImage(imageUrl: string, prompt: string, style: string): Promise<string> {
   try {
-    // Temporarily skip storage due to CORS issues with DALL-E URLs
-    // DALL-E images have CORS restrictions that prevent direct download
-    console.log('Using original DALL-E URL due to CORS restrictions:', imageUrl);
-    return imageUrl;
+    // Check if this is a DALL-E URL that might expire
+    if (imageUrl.includes('oaidalleapiprodscus.blob.core.windows.net')) {
+      console.log('DALL-E URL detected - will expire in 2 hours:', imageUrl);
+      
+      // For now, return the original URL but log the expiration warning
+      console.warn('⚠️ DALL-E URLs expire after 2 hours. Consider implementing server-side storage.');
+      return imageUrl;
+    }
+
+    // For other URLs, try to store them
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const fileName = `${Date.now()}-${prompt.slice(0, 20).replace(/[^a-zA-Z0-9]/g, '-')}.png`;
     
-    // TODO: Implement server-side image download to avoid CORS issues
-    // This would require a backend endpoint that downloads the image server-side
-    // and then uploads it to Supabase Storage
-    
+    const { data, error } = await supabase.storage
+      .from('generated-images')
+      .upload(fileName, blob, {
+        contentType: 'image/png',
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Storage upload error:', error);
+      return imageUrl; // Fallback to original URL
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('generated-images')
+      .getPublicUrl(fileName);
+
+    console.log('Image stored successfully:', publicUrl);
+    return publicUrl;
+
   } catch (error) {
     console.error('Error storing image:', error);
-    // Fallback to the original URL
-    return imageUrl;
+    return imageUrl; // Fallback to original URL
   }
 }
 
 export async function createStorageBucket(): Promise<void> {
   try {
-    // Temporarily skip bucket creation due to RLS policy issues
-    console.log('Skipping storage bucket creation due to RLS policy issues');
-    return;
-    
-    // TODO: Fix RLS policies and re-enable storage
-    /*
+    // Try to create the bucket
     const { data, error } = await supabase.storage.createBucket('generated-images', {
       public: true,
       allowedMimeTypes: ['image/png', 'image/jpeg', 'image/webp'],
       fileSizeLimit: 10485760 // 10MB
     });
-    
+
     if (error && !error.message.includes('already exists')) {
       console.error('Error creating storage bucket:', error);
+      console.log('Please run the SQL script in supabase-storage-fix.sql to fix RLS policies');
+    } else {
+      console.log('Storage bucket ready');
     }
-    */
   } catch (error) {
     console.error('Error setting up storage:', error);
+    console.log('Please run the SQL script in supabase-storage-fix.sql to fix RLS policies');
   }
 }
