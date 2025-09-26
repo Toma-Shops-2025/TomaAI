@@ -391,7 +391,6 @@ export default function AppLayout() {
               onNumImagesChange={setNumImages}
             />
           </div>
-            </div>
 
             {/* Saved Images for logged-in users */}
             {user && savedImages.length > 0 && (
