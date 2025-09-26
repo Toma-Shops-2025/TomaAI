@@ -11,6 +11,7 @@ import { GeneratedImage } from '@/lib/supabase';
 import { downloadAndStoreImage, createStorageBucket } from '@/lib/imageStorage';
 import { generateImages, getSampleImage } from '@/lib/openai';
 import { canGenerateImage, getRemainingImages, isTrialActive } from '@/lib/subscription';
+import FloatingHomeButton from './FloatingHomeButton';
 
 export default function AppLayout() {
   const { user, saveGeneratedImage, getGeneratedImages } = useSupabase();
@@ -381,6 +382,9 @@ export default function AppLayout() {
           </div>
         </div>
       </div>
+      
+      {/* Floating Home Button */}
+      <FloatingHomeButton />
     </div>
   );
 }

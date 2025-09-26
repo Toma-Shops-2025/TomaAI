@@ -12,140 +12,140 @@ const styles = [
     name: 'Photorealistic', 
     description: 'Lifelike photos', 
     icon: '📸',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-t09OGgzeUa6vbfFMAkheSeCz.png?st=2025-09-26T00%3A11%3A30Z&se=2025-09-26T02%3A11%3A30Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=6e4237ed-4a31-4e1d-a677-4df21834ece0&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T07%3A37%3A50Z&ske=2025-09-26T07%3A37%3A50Z&sks=b&skv=2024-08-04&sig=sLMg0Ijg6gYS2Mo1SmwHehLzTtm01YY2x0ShH/M5ZZI%3D'
+    sampleImage: '/images/styles/photorealistic-sample.png'
   },
   { 
     id: 'abstract', 
     name: 'Abstract', 
     description: 'Modern art', 
     icon: '🎨',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-JHo04O0fKz9QwA9lkOO9YfQQ.png?st=2025-09-26T00%3A26%3A39Z&se=2025-09-26T02%3A26%3A39Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T00%3A09%3A36Z&ske=2025-09-27T00%3A09%3A36Z&sks=b&skv=2024-08-04&sig=fAVZAryekPwnncK/Qtk7RK9xD9Tc7zhODHZbrhcane8%3D'
+    sampleImage: '/images/styles/abstract-sample.png'
   },
   { 
     id: 'anime', 
     name: 'Anime', 
     description: 'Japanese animation', 
     icon: '🎌',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-QjYpTHTjNMsYkYstx2u9qVue.png?st=2025-09-26T00%3A30%3A04Z&se=2025-09-26T02%3A30%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T08%3A34%3A02Z&ske=2025-09-26T08%3A34%3A02Z&sks=b&skv=2024-08-04&sig=WYm5/BsDm1uKvUHxa44Cup4%2BDE2Yc6iId%2BkO56igsiU%3D'
+    sampleImage: '/images/styles/anime-sample.png'
   },
   { 
     id: 'artistic', 
     name: 'Artistic', 
     description: 'Traditional art', 
     icon: '🖼️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-3focf5VLYqBQAbelcBtsH9u9.png?st=2025-09-26T00%3A33%3A13Z&se=2025-09-26T02%3A33%3A13Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T22%3A28%3A06Z&ske=2025-09-26T22%3A28%3A06Z&sks=b&skv=2024-08-04&sig=Pz6AqO01%2BiQZPaDnn7I3N3wLGSOBP9nQ/MHdgIbIxWE%3D'
+    sampleImage: '/images/styles/artistic-sample.png'
   },
   { 
     id: 'cyberpunk', 
     name: 'Cyberpunk', 
     description: 'Futuristic neon', 
     icon: '🌃',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-4i4dDGOg0R9YlJvHFIWoDWUy.png?st=2025-09-26T00%3A41%3A33Z&se=2025-09-26T02%3A41%3A33Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T01%3A40%3A30Z&ske=2025-09-27T01%3A40%3A30Z&sks=b&skv=2024-08-04&sig=2/HNVaJBwSsASVQqXrpG2uUnVkVL3Cpw0owkrclgosI%3D'
+    sampleImage: '/images/styles/cyberpunk-sample.png'
   },
   { 
     id: 'fantasy', 
     name: 'Fantasy', 
     description: 'Magical worlds', 
     icon: '🧙‍♂️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-CoBT3D2cTwdaWkHwUpsSUts3.png?st=2025-09-26T00%3A43%3A42Z&se=2025-09-26T02%3A43%3A42Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8eb2c87c-0531-4dab-acb3-b5e2adddce6c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T23%3A07%3A32Z&ske=2025-09-26T23%3A07%3A32Z&sks=b&skv=2024-08-04&sig=KxhKCFb%2BGgUI5chcMPMjyEQBQwiInalmpd0v078aELc%3D'
+    sampleImage: '/images/styles/fantasy-sample.png'
   },
   { 
     id: 'vintage', 
     name: 'Vintage', 
     description: 'Retro classic', 
     icon: '📻',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-AcnGHYzVJpmXQT4mydocYPk1.png?st=2025-09-26T00%3A46%3A00Z&se=2025-09-26T02%3A46%3A00Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T15%3A24%3A25Z&ske=2025-09-26T15%3A24%3A25Z&sks=b&skv=2024-08-04&sig=pq9HdqBBKWWoMebMpCi8Nk0XP2zL7DlT4yui/pM0aCQ%3D'
+    sampleImage: '/images/styles/vintage-sample.png'
   },
   { 
     id: 'minimalist', 
     name: 'Minimalist', 
     description: 'Clean & simple', 
     icon: '⚪',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-uAgLCKn8cC6hJ1WPve8WAbGK.png?st=2025-09-26T00%3A48%3A01Z&se=2025-09-26T02%3A48%3A01Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T21%3A48%3A50Z&ske=2025-09-26T21%3A48%3A50Z&sks=b&skv=2024-08-04&sig=9UzMNvQxZUm3adNuYaTO4j/0P/4zxX3aL81y0QVyE4I%3D'
+    sampleImage: '/images/styles/minimalist-sample.png'
   },
   { 
     id: 'watercolor', 
     name: 'Watercolor', 
     description: 'Soft painting', 
     icon: '🎨',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-7IQ5hPoSj3IfWq0VwCweXGVX.png?st=2025-09-26T00%3A50%3A06Z&se=2025-09-26T02%3A50%3A06Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T22%3A51%3A24Z&ske=2025-09-26T22%3A51%3A24Z&sks=b&skv=2024-08-04&sig=Gg6U/MLlN1ZasyNLqsJk47OoKYT99Xj3U5Bdikeajqs%3D'
+    sampleImage: '/images/styles/watercolor-sample.png'
   },
   { 
     id: 'oil_painting', 
     name: 'Oil Painting', 
     description: 'Classical art', 
     icon: '🖌️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-BOszuB8uNjgnPvWXz5fMXBeV.png?st=2025-09-26T01%3A23%3A54Z&se=2025-09-26T03%3A23%3A54Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T00%3A19%3A36Z&ske=2025-09-27T00%3A19%3A36Z&sks=b&skv=2024-08-04&sig=X/0ISi4omg02q0Ga1JA4RDKqVzKgFJatvCRwi5WumBE%3D'
+    sampleImage: '/images/styles/oil-painting-sample.png'
   },
   { 
     id: 'digital_art', 
     name: 'Digital Art', 
     description: 'Modern digital', 
     icon: '💻',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-5CTd2QX1As4hKIgcIId2FzLm.png?st=2025-09-26T00%3A54%3A55Z&se=2025-09-26T02%3A54%3A55Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T23%3A48%3A00Z&ske=2025-09-26T23%3A48%3A00Z&sks=b&skv=2024-08-04&sig=hZmFn10IRAT8zMveMV3pxxq0ehK8VjIOxDiq%2BGGSMe8%3D'
+    sampleImage: '/images/styles/digital-art-sample.png'
   },
   { 
     id: 'sketch', 
     name: 'Sketch', 
     description: 'Hand-drawn', 
     icon: '✏️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-J3gpGgcQdu0qVBTl4RYtM3Er.png?st=2025-09-26T00%3A57%3A42Z&se=2025-09-26T02%3A57%3A42Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T20%3A21%3A41Z&ske=2025-09-26T20%3A21%3A41Z&sks=b&skv=2024-08-04&sig=SHeeYucaa7fO99w/C2sLyiDV05VKbayUQn46p6qnNHc%3D'
+    sampleImage: '/images/styles/sketch-sample.png'
   },
   { 
     id: 'pop_art', 
     name: 'Pop Art', 
     description: 'Bold & vibrant', 
     icon: '🟡',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-eJnjiA0mmyB2MisEADet95YM.png?st=2025-09-26T01%3A00%3A14Z&se=2025-09-26T03%3A00%3A14Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=32836cae-d25f-4fe9-827b-1c8c59c442cc&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T22%3A07%3A00Z&ske=2025-09-26T22%3A07%3A00Z&sks=b&skv=2024-08-04&sig=LBS2WIrnsKfVeVx6MivCl2oVm%2Bk%2BgFzwa1HiWfmWeVw%3D'
+    sampleImage: '/images/styles/pop-art-sample.png'
   },
   { 
     id: 'surreal', 
     name: 'Surreal', 
     description: 'Dreamlike', 
     icon: '🌙',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-FS0bABYcgvcPODb8eme8BjN8.png?st=2025-09-26T01%3A04%3A02Z&se=2025-09-26T03%3A04%3A02Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8eb2c87c-0531-4dab-acb3-b5e2adddce6c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T01%3A26%3A46Z&ske=2025-09-27T01%3A26%3A46Z&sks=b&skv=2024-08-04&sig=FKwBF2kLeBlkQITt755QEWAKZ85rrv%2BE%2BmK0SfsS7fY%3D'
+    sampleImage: '/images/styles/surreal-sample.png'
   },
   { 
     id: 'steampunk', 
     name: 'Steampunk', 
     description: 'Victorian tech', 
     icon: '⚙️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-TkBK6DTeHR31dXp4xdLrLcCy.png?st=2025-09-26T01%3A06%3A18Z&se=2025-09-26T03%3A06%3A18Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=32836cae-d25f-4fe9-827b-1c8c59c442cc&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T02%3A06%3A18Z&ske=2025-09-27T02%3A06%3A18Z&sks=b&skv=2024-08-04&sig=cmQq2r%2BBycqW%2BL%2BonBCG4QGVus%2BNSSXebepdK6Qguls%3D'
+    sampleImage: '/images/styles/steampunk-sample.png'
   },
   { 
     id: 'gothic', 
     name: 'Gothic', 
     description: 'Dark & dramatic', 
     icon: '🦇',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-51Ri1C6kZu3GbLUfb0r8bsb1.png?st=2025-09-26T01%3A08%3A13Z&se=2025-09-26T03%3A08%3A13Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T00%3A09%3A36Z&ske=2025-09-27T00%3A09%3A36Z&sks=b&skv=2024-08-04&sig=B5Q4ihbojoOE13WyvcTVvwPCveFYkEa6MSCc0LeDh1E%3D'
+    sampleImage: '/images/styles/gothic-sample.png'
   },
   { 
     id: 'impressionist', 
     name: 'Impressionist', 
     description: 'Soft brushstrokes', 
     icon: '🌅',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-BNjOE3IepCT2FXSo26rFjI9y.png?st=2025-09-26T01%3A10%3A47Z&se=2025-09-26T03%3A10%3A47Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T02%3A10%3A47Z&ske=2025-09-27T02%3A10%3A47Z&sks=b&skv=2024-08-04&sig=rWGYzZpce9AcpJ4k64SllEfIA8HvhkoiJV5YSE5NDBY%3D'
+    sampleImage: '/images/styles/impressionist-sample.png'
   },
   { 
     id: 'cartoon', 
     name: 'Cartoon', 
     description: 'Animated style', 
     icon: '🎭',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-Z8W4KFuGZ5py2HuxW14FEMs7.png?st=2025-09-26T01%3A15%3A54Z&se=2025-09-26T03%3A15%3A54Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T00%3A39%3A10Z&ske=2025-09-27T00%3A39%3A10Z&sks=b&skv=2024-08-04&sig=WRadi36IOLIrVMvfaFGy9u/li3kceBhirzS%2Bk/i3aWE%3D'
+    sampleImage: '/images/styles/cartoon-sample.png'
   },
   { 
     id: 'realistic_portrait', 
     name: 'Portrait', 
     description: 'Professional headshot', 
     icon: '👤',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-vAzhYueVqGjIatuKnPvrM1Ws.png?st=2025-09-26T01%3A18%3A28Z&se=2025-09-26T03%3A18%3A28Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=6e4237ed-4a31-4e1d-a677-4df21834ece0&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T01%3A31%3A54Z&ske=2025-09-27T01%3A31%3A54Z&sks=b&skv=2024-08-04&sig=Isbb2QJQlzpdHd1W0SUVGkvthGgFrz5FdYFrJRaUl/A%3D'
+    sampleImage: '/images/styles/portrait-sample.png'
   },
   { 
     id: 'landscape', 
     name: 'Landscape', 
     description: 'Nature scenes', 
     icon: '🏞️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-KJTnyM4AsMzjO3CrGOmh7gGs.png?st=2025-09-26T01%3A20%3A15Z&se=2025-09-26T03%3A20%3A15Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-26T00%3A24%3A03Z&ske=2025-09-27T00%3A24%3A03Z&sks=b&skv=2024-08-04&sig=nCl25HJFNKt/zhYWSN3QncnvpjcN2mKtmGwufi8fRz8%3D'
+    sampleImage: '/images/styles/landscape-sample.png'
   }
 ];
 
