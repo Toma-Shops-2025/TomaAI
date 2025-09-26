@@ -14,7 +14,7 @@ import { canGenerateImage, getRemainingImages, isTrialActive } from '@/lib/subsc
 import FloatingHomeButton from './FloatingHomeButton';
 
 export default function AppLayout() {
-  const { user, saveGeneratedImage, getGeneratedImages } = useSupabase();
+  const { user, saveGeneratedImage, getGeneratedImages, signOut } = useSupabase();
   const [selectedStyle, setSelectedStyle] = useState('photorealistic');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [quality, setQuality] = useState('high');
@@ -252,14 +252,22 @@ export default function AppLayout() {
           </h1>
           <div className="flex items-center gap-4">
             {user && (
-              <div className="text-white text-sm">
-                {userSubscription.tier === 'free' ? (
-                  <span className="bg-slate-600 px-3 py-1 rounded-full text-xs font-medium">Free Plan</span>
-                ) : (
-                  <span className="bg-gradient-to-r from-cyan-500 to-blue-500 px-3 py-1 rounded-full text-xs font-medium">
-                    {userSubscription.tier.charAt(0).toUpperCase() + userSubscription.tier.slice(1)} Plan
-                  </span>
-                )}
+              <div className="flex items-center gap-3">
+                <div className="text-white text-sm">
+                  {userSubscription.tier === 'free' ? (
+                    <span className="bg-slate-600 px-3 py-1 rounded-full text-xs font-medium">Free Plan</span>
+                  ) : (
+                    <span className="bg-gradient-to-r from-cyan-500 to-blue-500 px-3 py-1 rounded-full text-xs font-medium">
+                      {userSubscription.tier.charAt(0).toUpperCase() + userSubscription.tier.slice(1)} Plan
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={() => signOut()}
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors"
+                >
+                  Sign Out
+                </button>
               </div>
             )}
             <PricingModal />
