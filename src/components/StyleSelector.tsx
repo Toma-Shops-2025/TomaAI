@@ -12,42 +12,42 @@ const styles = [
     name: 'Photorealistic', 
     description: 'Lifelike photos', 
     icon: '📸',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-B2IuyN7M9nw9o1tuPF2cfDEG.png?st=2025-09-25T22%3A30%3A54Z&se=2025-09-26T00%3A30%3A54Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=38e27a3b-6174-4d3e-90ac-d7d9ad49543f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T21%3A05%3A58Z&ske=2025-09-26T21%3A05%3A58Z&sks=b&skv=2024-08-04&sig=sX9jnLPy9y1W1mCNO18iRc0HMvgaIWKHek%2BPbWNWvv8%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'abstract', 
     name: 'Abstract', 
     description: 'Modern art', 
     icon: '🎨',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-BESx2q1CfYRTU6UwUeh6vNLP.png?st=2025-09-25T22%3A36%3A53Z&se=2025-09-26T00%3A36%3A53Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T22%3A14%3A49Z&ske=2025-09-26T22%3A14%3A49Z&sks=b&skv=2024-08-04&sig=ltGCmohyxnAcBwdgMmUxmTqionZbTVEBuJsIptxN9p4%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'anime', 
     name: 'Anime', 
     description: 'Japanese animation', 
     icon: '🎌',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-UNetw9jcArB3AMUBAUh4Wbha.png?st=2025-09-25T22%3A38%3A49Z&se=2025-09-26T00%3A38%3A49Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=0e2a3d55-e963-40c9-9c89-2a1aa28cb3ac&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T21%3A31%3A24Z&ske=2025-09-26T21%3A31%3A24Z&sks=b&skv=2024-08-04&sig=yK/QHVjzX2B%2BKRGNvBdur5l0%2BmyBEzYz9KVtAslAVX0%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1578662015118-a4b75b69b2ee?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'artistic', 
     name: 'Artistic', 
     description: 'Traditional art', 
     icon: '🖼️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-ffkl8nBAee6mmPhjjNIluYFV.png?st=2025-09-25T22%3A40%3A55Z&se=2025-09-26T00%3A40%3A55Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=c6569cb0-0faa-463d-9694-97df3dc1dfb1&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T15%3A58%3A16Z&ske=2025-09-26T15%3A58%3A16Z&sks=b&skv=2024-08-04&sig=rxrRARVVO1M7ujFFetmRTwzTPL4TZ20smcnM8UnZ%2BFA%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'cyberpunk', 
     name: 'Cyberpunk', 
     description: 'Futuristic neon', 
     icon: '🌃',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-KdnmWRJfgTK9C3Bvk548TMzB.png?st=2025-09-25T22%3A43%3A40Z&se=2025-09-26T00%3A43%3A40Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T00%3A37%3A58Z&ske=2025-09-26T00%3A37%3A58Z&sks=b&skv=2024-08-04&sig=FYOursXtIKJVXpkAtiK/lQT/pjCs8KCVWqy719n8dAU%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'fantasy', 
     name: 'Fantasy', 
     description: 'Magical worlds', 
     icon: '🧙‍♂️',
-    sampleImage: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-QXOBKz7Ak83yrlkmN2QPsVHf/user-HiWMbo4wtP29VfygmsRhGNsD/img-CxS6zQiXgp9SDQxz8tBmVs9R.png?st=2025-09-25T22%3A47%3A05Z&se=2025-09-26T00%3A47%3A05Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=31d50bd4-689f-439b-a875-f22bd677744d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-09-25T23%3A47%3A05Z&ske=2025-09-26T23%3A47%3A05Z&sks=b&skv=2024-08-04&sig=BiXC0eVVOa8Iflg6ICkMMhMiVqXlasPF/U/bw6j8Ouo%3D'
+    sampleImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=300&fit=crop&crop=center'
   },
   { 
     id: 'vintage', 
