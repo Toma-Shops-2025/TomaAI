@@ -1,16 +1,43 @@
 // Image storage utilities to handle DALL-E URL expiration
 import { supabase } from './supabase';
 
-export async function downloadAndStoreImage(imageUrl: string, prompt: string, style: string): Promise<string> {
+export async function downloadAndStoreImage(imageUrl: string, prompt: string, style: string, userId?: string): Promise<string> {
   try {
     // Check if this is a DALL-E URL that might expire
     if (imageUrl.includes('oaidalleapiprodscus.blob.core.windows.net')) {
-      console.log('DALL-E URL detected - CORS prevents direct download, using original URL:', imageUrl);
+      console.log('DALL-E URL detected - using server-side proxy to store permanently:', imageUrl);
       
-      // For now, return the original URL since CORS prevents direct download
-      // TODO: Implement server-side proxy to download and store images
-      console.warn('⚠️ DALL-E URLs expire after 2 hours. Server-side storage needed to prevent CORS issues.');
-      return imageUrl;
+      if (!userId) {
+        console.warn('No user ID provided, using original URL');
+        return imageUrl;
+      }
+
+      // Use server-side proxy to download and store the image
+      const response = await fetch('/.netlify/functions/proxy-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl,
+          prompt,
+          style,
+          userId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Proxy request failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log('✅ Image stored permanently via proxy:', result.imageUrl);
+        return result.imageUrl;
+      } else {
+        throw new Error(result.error || 'Proxy failed');
+      }
     }
 
     // For other URLs, try to store them

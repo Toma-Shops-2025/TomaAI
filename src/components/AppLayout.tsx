@@ -198,7 +198,7 @@ export default function AppLayout() {
         const newImages: GeneratedImage[] = [];
         for (const imageUrl of result.images) {
           // Download and store the image permanently
-          const permanentUrl = await downloadAndStoreImage(imageUrl, prompt, selectedStyle);
+          const permanentUrl = await downloadAndStoreImage(imageUrl, prompt, selectedStyle, user.id);
           
           newImages.push({
             id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
