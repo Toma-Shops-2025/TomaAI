@@ -1,20 +1,54 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const Stripe = require('stripe');
+const { createClient } = require('@supabase/supabase-js');
+
+// Initialize Stripe
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+
+// Initialize Supabase
+const supabaseUrl = process.env.VITE_SUPABASE_URL || 'https://irzzehvrytkunrxqniuo.supabase.co';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 exports.handler = async (event, context) => {
-  // Only allow POST requests
+  // Handle CORS
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+
+  // Handle preflight requests
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: '',
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' })
-    }
+      headers,
+      body: JSON.stringify({ error: 'Method not allowed' }),
+    };
   }
 
   try {
-    const { priceId, userId, userEmail, mode } = JSON.parse(event.body)
+    const { priceId, userId, userEmail, mode = 'payment' } = JSON.parse(event.body);
 
-    // Create Stripe Checkout session for one-time payments
+    if (!priceId || !userId || !userEmail) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Missing required parameters' }),
+      };
+    }
+
+    console.log('Creating payment session for:', { priceId, userId, userEmail, mode });
+
+    // Create Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
-      mode: 'payment', // Always 'payment' for one-time purchases
       payment_method_types: ['card'],
       line_items: [
         {
@@ -22,34 +56,36 @@ exports.handler = async (event, context) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL}/pricing`,
+      mode: mode,
+      success_url: `${process.env.URL || 'https://tomaai.online'}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.URL || 'https://tomaai.online'}/cancel`,
       customer_email: userEmail,
       metadata: {
-        userId: userId,
-        purchaseType: 'one-time',
+        userId,
+        priceId,
       },
-    })
+    });
+
+    console.log('Stripe session created:', session.id);
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      },
-      body: JSON.stringify({ sessionId: session.id }),
-    }
+      headers,
+      body: JSON.stringify({
+        sessionId: session.id,
+        url: session.url,
+      }),
+    };
+
   } catch (error) {
-    console.error('Error creating payment session:', error)
+    console.error('Payment session creation error:', error);
+    
     return {
       statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify({ error: error.message }),
-    }
+      headers,
+      body: JSON.stringify({
+        error: error.message,
+      }),
+    };
   }
-}
+};

@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 interface ExtendedPricingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  userEmail?: string;
+  userId?: string;
 }
 
-export default function ExtendedPricingModal({ isOpen, onClose }: ExtendedPricingModalProps) {
+export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userId }: ExtendedPricingModalProps) {
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
 
   if (!isOpen) return null;
@@ -25,15 +27,39 @@ export default function ExtendedPricingModal({ isOpen, onClose }: ExtendedPricin
 
   const handlePurchase = async (packageType: string, images: number, price: number) => {
     try {
-      // For now, show a proper message instead of just an alert
       const confirmed = window.confirm(
         `Purchase ${images} images for $${price.toFixed(2)}?\n\nThis will redirect you to our secure payment processor.`
       );
       
       if (confirmed) {
-        // TODO: Implement actual Stripe checkout
-        // For now, show success message
-        alert(`Payment processing for ${images} images at $${price.toFixed(2)}. This feature will be available soon!`);
+        // Use passed user info or fallback
+        const email = userEmail || 'user@example.com';
+        const id = userId || 'temp-user-id';
+        
+        // Create price ID based on package
+        let priceId = '';
+        if (packageType === 'pay') {
+          if (images === 1) priceId = 'price_single_image';
+          else if (images === 5) priceId = 'price_five_images';
+          else if (images === 10) priceId = 'price_ten_images';
+          else if (images === 25) priceId = 'price_twenty_five_images';
+        } else if (packageType === 'bulk') {
+          if (images === 100) priceId = 'price_hundred_images';
+          else if (images === 500) priceId = 'price_five_hundred_images';
+          else if (images === 1000) priceId = 'price_thousand_images';
+        }
+        
+        if (!priceId) {
+          alert('Invalid package selection. Please try again.');
+          return;
+        }
+        
+        // Create payment session
+        const { createPaymentSession, redirectToCheckout } = await import('@/lib/stripe');
+        const sessionId = await createPaymentSession(priceId, id, email);
+        
+        // Redirect to Stripe Checkout
+        await redirectToCheckout(sessionId);
         onClose();
       }
     } catch (error) {

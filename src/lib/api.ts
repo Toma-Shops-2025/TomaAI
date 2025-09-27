@@ -15,7 +15,7 @@ export interface CheckoutSessionResponse {
 // Create Stripe Checkout session
 export async function createCheckoutSession(request: CheckoutSessionRequest): Promise<string> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/create-checkout-session`, {
+    const response = await fetch('/.netlify/functions/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export async function createCheckoutSession(request: CheckoutSessionRequest): Pr
 
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.message || 'Failed to create checkout session')
+      throw new Error(errorData.error || 'Failed to create checkout session')
     }
 
     const data: CheckoutSessionResponse = await response.json()
@@ -39,7 +39,7 @@ export async function createCheckoutSession(request: CheckoutSessionRequest): Pr
 // Create Stripe Payment session (for one-time payments)
 export async function createPaymentSession(request: CheckoutSessionRequest): Promise<string> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/create-payment-session`, {
+    const response = await fetch('/.netlify/functions/create-payment-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export async function createPaymentSession(request: CheckoutSessionRequest): Pro
 
     if (!response.ok) {
       const errorData = await response.json()
-      throw new Error(errorData.message || 'Failed to create payment session')
+      throw new Error(errorData.error || 'Failed to create payment session')
     }
 
     const data: CheckoutSessionResponse = await response.json()

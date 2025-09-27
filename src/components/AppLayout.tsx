@@ -709,10 +709,12 @@ export default function AppLayout() {
       <FloatingHomeButton />
       
       {/* Extended Pricing Modal */}
-      <ExtendedPricingModal 
-        isOpen={showExtendedPricing}
-        onClose={() => setShowExtendedPricing(false)}
-      />
+        <ExtendedPricingModal 
+          isOpen={showExtendedPricing} 
+          onClose={() => setShowExtendedPricing(false)}
+          userEmail={user?.email}
+          userId={user?.id}
+        />
     </div>
   );
 }
