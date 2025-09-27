@@ -30,6 +30,24 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation,
   if (imageError || (src.includes('oaidalleapiprodscus.blob.core.windows.net') && src.includes('st='))) {
     return (
       <div className="relative group bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700 p-4">
+        {/* Delete button - always visible in top right */}
+        {onDelete && (
+          <button
+            onClick={onDelete}
+            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+            title="Delete image"
+          >
+            ×
+          </button>
+        )}
+
+        {/* Timestamp - always visible in top left */}
+        {createdAt && (
+          <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded z-10">
+            {new Date(createdAt).toLocaleString()}
+          </div>
+        )}
+
         <div className="w-full h-64 bg-slate-700 flex items-center justify-center">
           <div className="text-center">
             <div className="text-gray-400 mb-2">🖼️</div>
@@ -37,7 +55,9 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation,
             <div className="text-gray-500 text-xs mt-1">DALL-E URLs expire after 2 hours</div>
           </div>
         </div>
-        <div className="absolute top-2 left-2 bg-slate-700 px-2 py-1 rounded text-xs text-gray-300">
+        
+        {/* Style tag - positioned below timestamp */}
+        <div className="absolute top-2 left-2 bg-slate-700 px-2 py-1 rounded text-xs text-gray-300" style={{ top: createdAt ? '2.5rem' : '0.5rem' }}>
           {style}
         </div>
         <div className="p-3">
@@ -45,9 +65,14 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation,
           <div className="flex gap-2">
             <button
               onClick={() => onVariation(prompt, style)}
-              className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-xs py-1 px-2 rounded transition-colors"
+              disabled={isRegenerating}
+              className={`flex-1 text-xs py-1 px-2 rounded transition-colors ${
+                isRegenerating 
+                  ? 'bg-purple-600 text-white cursor-not-allowed' 
+                  : 'bg-purple-600 hover:bg-purple-700 text-white'
+              }`}
             >
-              Regenerate
+              {isRegenerating ? 'Regenerating...' : 'Regenerate'}
             </button>
           </div>
         </div>
