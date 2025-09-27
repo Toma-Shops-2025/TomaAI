@@ -302,7 +302,7 @@ export default function AppLayout() {
       
       // Reset state after a short delay to show completion
       setTimeout(() => {
-        setIsGenerating(false);
+      setIsGenerating(false);
         setGenerationProgress(0);
         setGenerationStatus('');
       }, 2000);
@@ -534,31 +534,31 @@ export default function AppLayout() {
                       onVariation={handleVariation}
                     />
                   ))}
-                </div>
-              </div>
+          </div>
+        </div>
             )}
 
-            {/* Generated Images */}
-            {generatedImages.length > 0 && (
-              <div className="mt-12">
-                <h3 className="text-white font-semibold text-2xl mb-6">Your Generated Images</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {generatedImages.map((image, index) => (
-                    <ImageCard
-                      key={index}
+        {/* Generated Images */}
+        {generatedImages.length > 0 && (
+          <div className="mt-12">
+            <h3 className="text-white font-semibold text-2xl mb-6">Your Generated Images</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {generatedImages.map((image, index) => (
+                <ImageCard
+                  key={index}
                       src={image.image_url || ''}
                       prompt={image.prompt || ''}
                       style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
-                      onVariation={handleVariation}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+                  onVariation={handleVariation}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
-            {/* Sample Gallery */}
-            <div className="mt-12">
+        {/* Sample Gallery */}
+        <div className="mt-12">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-white font-semibold text-2xl">Explore AI-Generated Art</h3>
                 <button
@@ -568,15 +568,15 @@ export default function AppLayout() {
                   Clear All Samples
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {sampleImages.map((image) => (
                   <div key={image.id} className="relative group">
-                    <ImageCard
+              <ImageCard
                       src={image.src || ''}
                       prompt={image.prompt || ''}
                       style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
-                      onVariation={handleVariation}
+                onVariation={handleVariation}
                     />
                     <button
                       onClick={() => removeSampleImage(image.id)}
@@ -677,7 +677,7 @@ export default function AppLayout() {
                 disabled={isGenerating}
               />
             )}
-          </div>
+        </div>
         )}
 
         {/* Community Gallery Tab */}

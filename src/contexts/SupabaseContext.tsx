@@ -130,19 +130,24 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const getGeneratedImages = async (): Promise<GeneratedImage[]> => {
     try {
-      // Add cache busting to prevent stale data
+      // Only get images for the current user
+      if (!user) return []
+      
       const { data, error } = await supabase
         .from('generated_images')
         .select('*')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false })
       
       if (error) throw error
+      console.log(`📥 Fetched ${data?.length || 0} images for user ${user.id}`)
       return data || []
     } catch (error: any) {
       console.error('Error fetching images:', error)
       return []
     }
   }
+
 
   const value = {
     user,
