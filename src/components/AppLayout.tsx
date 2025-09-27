@@ -67,6 +67,9 @@ export default function AppLayout() {
       if (user) {
         const images = await getGeneratedImages();
         setSavedImages(images);
+      } else {
+        // Reset saved images when user logs out
+        setSavedImages([]);
       }
     };
     loadSavedImages();
@@ -74,18 +77,32 @@ export default function AppLayout() {
 
   // Update imagesUsed count when savedImages changes
   useEffect(() => {
+    if (!user) {
+      // Reset counter for non-authenticated users
+      setUserSubscription(prev => ({
+        ...prev,
+        imagesUsed: 0
+      }));
+      return;
+    }
+
+    // Only count images for the current user
+    const userImages = savedImages.filter(img => img.user_id === user.id);
+    
+    console.log('Debug - User images count:', userImages.length, 'Total saved images:', savedImages.length, 'User ID:', user.id);
+    
     // Cap the imagesUsed at the tier limit to prevent display issues
     const tierLimit = userSubscription.tier === 'free' ? 3 : 
                      userSubscription.tier === 'starter' ? 50 : 
                      userSubscription.tier === 'pro' ? 200 : -1;
     
-    const actualUsed = Math.min(savedImages.length, tierLimit === -1 ? savedImages.length : tierLimit);
+    const actualUsed = Math.min(userImages.length, tierLimit === -1 ? userImages.length : tierLimit);
     
     setUserSubscription(prev => ({
       ...prev,
       imagesUsed: actualUsed
     }));
-  }, [savedImages, userSubscription.tier]);
+  }, [savedImages, userSubscription.tier, user]);
 
   // Initialize storage bucket
   useEffect(() => {
