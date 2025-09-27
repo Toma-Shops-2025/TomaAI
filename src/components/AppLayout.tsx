@@ -18,7 +18,7 @@ import PublicGallery from './PublicGallery';
 import ExtendedPricingModal from './ExtendedPricingModal';
 
 export default function AppLayout() {
-  const { user, saveGeneratedImage, getGeneratedImages, signOut, deleteGeneratedImage, userProfile, updateEmailCollected } = useSupabase();
+  const { user, saveGeneratedImage, getGeneratedImages, signOut, deleteGeneratedImage } = useSupabase();
   const [selectedStyle, setSelectedStyle] = useState('photorealistic');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [quality, setQuality] = useState('high');
@@ -29,8 +29,7 @@ export default function AppLayout() {
   const [userSubscription, setUserSubscription] = useState({
     tier: 'free',
     imagesUsed: 0,
-    trialEndsAt: null as string | null,
-    emailCollected: false
+    trialEndsAt: null as string | null
   });
   const [generationProgress, setGenerationProgress] = useState(0);
   const [generationStatus, setGenerationStatus] = useState('');
@@ -66,15 +65,6 @@ export default function AppLayout() {
     createStorageBucket();
   }, []);
 
-  // Initialize emailCollected from user profile
-  useEffect(() => {
-    if (userProfile) {
-      setUserSubscription(prev => ({
-        ...prev,
-        emailCollected: userProfile.email_collected
-      }));
-    }
-  }, [userProfile]);
 
   // Load saved images on component mount
   useEffect(() => {
@@ -85,9 +75,7 @@ export default function AppLayout() {
         setSavedImages([]);
         setUserSubscription(prev => ({
           ...prev,
-          imagesUsed: 0,
-          // Don't reset emailCollected - keep it if user already provided email
-          // emailCollected: false
+          imagesUsed: 0
         }));
         // Add a small delay to ensure state is cleared
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -139,25 +127,25 @@ export default function AppLayout() {
   }, []);
 
   const handleGenerate = async (prompt: string, negativePrompt: string) => {
-    // Require authentication for image generation
+    // For unauthenticated users, allow 1 free image then require signup
     if (!user) {
-      alert('Please sign in to generate images. You can create a free account to get started.');
-      setShowAuthModal(true);
-      return;
+      // Check if they've already used their 1 free image (stored in localStorage)
+      const hasUsedFreeImage = localStorage.getItem('usedFreeImage') === 'true';
+      if (hasUsedFreeImage) {
+        alert('You\'ve used your free image! Please sign up to generate more images.');
+        setShowAuthModal(true);
+        return;
+      }
+      
+      // Allow the generation and mark as used
+      localStorage.setItem('usedFreeImage', 'true');
     }
 
-    // Check subscription status for authenticated users
-    const canGenerate = canGenerateImage(userSubscription.tier, userSubscription.imagesUsed);
-    const isTrial = isTrialActive(userSubscription.trialEndsAt);
-    
-    if (!canGenerate && !isTrial) {
-      // For free users who have used all 3 images, show pricing options
-      if (userSubscription.tier === 'free') {
+    // For authenticated users, check if they've used their 2 additional images
+    if (user) {
+      if (userSubscription.tier === 'free' && userSubscription.imagesUsed >= 2) {
+        // Show pricing page with all subscription options
         setShowExtendedPricing(true);
-        return;
-      } else {
-        alert('You have reached your image limit. Please upgrade your plan to generate more images.');
-        setShowPricingModal(true);
         return;
       }
     }
@@ -343,41 +331,6 @@ export default function AppLayout() {
     handleGenerate(variationPrompt, '');
   };
 
-  const handleEmailCollection = async (email: string) => {
-    console.log('📧 Email collection triggered:', email);
-    
-    try {
-      // Update email collected status in database
-      await updateEmailCollected(true);
-      
-      // Update subscription state to show email collected
-      setUserSubscription(prev => {
-        console.log('📧 Updating emailCollected from', prev.emailCollected, 'to true');
-        return {
-          ...prev,
-          emailCollected: true
-        };
-      });
-      
-      // Store email in localStorage for backup
-      localStorage.setItem('userEmail', email);
-      
-      console.log('📧 Email collected and saved to database:', email);
-      
-      // You could also send a welcome email here
-      // sendWelcomeEmail(email);
-    } catch (error) {
-      console.error('Error updating email collected status:', error);
-      // Fallback to localStorage if database update fails
-      localStorage.setItem('emailCollected', 'true');
-      localStorage.setItem('userEmail', email);
-      
-      setUserSubscription(prev => ({
-        ...prev,
-        emailCollected: true
-      }));
-    }
-  };
 
   const handleDeleteImage = async (imageId: string) => {
     try {
@@ -512,25 +465,38 @@ export default function AppLayout() {
           {/* Left Column - Generation */}
           <div className="lg:col-span-2 space-y-8">
             {!user ? (
-              <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
-                <div className="mb-6">
-                  <img
-                    src="/icon-512x512.png"
-                    alt="TomaAI"
-                    className="h-16 w-16 mx-auto mb-4"
-                  />
-                  <h3 className="text-2xl font-bold text-white mb-2">Welcome to TomaAI</h3>
-                  <p className="text-gray-300 mb-6">
-                    Create stunning AI-generated images with our advanced technology. 
-                    Sign in to get started with 3 free images!
-                  </p>
+              <div className="space-y-8">
+                <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
+                  <div className="mb-6">
+                    <img
+                      src="/icon-512x512.png"
+                      alt="TomaAI"
+                      className="h-16 w-16 mx-auto mb-4"
+                    />
+                    <h3 className="text-2xl font-bold text-white mb-2">Try TomaAI for Free!</h3>
+                    <p className="text-gray-300 mb-6">
+                      Generate 1 free AI image to see what we can do. 
+                      Sign up for 2 more free images!
+                    </p>
+                  </div>
                 </div>
-                <button
-                  onClick={() => setShowAuthModal(true)}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-8 rounded-md transition-all transform hover:scale-105"
-                >
-                  Sign In to Get Started
-                </button>
+                
+                <PromptInput 
+                  onGenerate={handleGenerate} 
+                  isGenerating={isGenerating}
+                  userTier="free"
+                  imagesUsed={localStorage.getItem('usedFreeImage') === 'true' ? 1 : 0}
+                  maxImages={1}
+                  generationProgress={generationProgress}
+                  generationStatus={generationStatus}
+                  onShowPricing={() => setShowAuthModal(true)}
+                />
+                
+                <StyleSelector
+                  selectedStyle={selectedStyle}
+                  onStyleChange={setSelectedStyle}
+                  disabled={isGenerating}
+                />
               </div>
             ) : (
               <>
@@ -542,9 +508,7 @@ export default function AppLayout() {
                   maxImages={userSubscription.tier === 'free' ? 3 : userSubscription.tier === 'enterprise' ? -1 : userSubscription.tier === 'starter' ? 50 : 200}
                   generationProgress={generationProgress}
                   generationStatus={generationStatus}
-                  onEmailCollection={handleEmailCollection}
                   onShowPricing={() => setShowExtendedPricing(true)}
-                  emailCollected={userSubscription.emailCollected}
                 />
                 
                 <StyleSelector
