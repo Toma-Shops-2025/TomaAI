@@ -18,7 +18,7 @@ import PublicGallery from './PublicGallery';
 import ExtendedPricingModal from './ExtendedPricingModal';
 
 export default function AppLayout() {
-  const { user, saveGeneratedImage, getGeneratedImages, signOut } = useSupabase();
+  const { user, saveGeneratedImage, getGeneratedImages, signOut, deleteGeneratedImage } = useSupabase();
   const [selectedStyle, setSelectedStyle] = useState('photorealistic');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [quality, setQuality] = useState('high');
@@ -347,6 +347,18 @@ export default function AppLayout() {
     // sendWelcomeEmail(email);
   };
 
+  const handleDeleteImage = async (imageId: string) => {
+    try {
+      await deleteGeneratedImage(imageId);
+      // Reload saved images to update the list
+      const images = await getGeneratedImages();
+      setSavedImages(images);
+    } catch (error) {
+      console.error('Failed to delete image:', error);
+      alert('Failed to delete image. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-900">
       {/* Header */}
@@ -537,6 +549,8 @@ export default function AppLayout() {
                       style={image.style || ''}
                       onDownload={(imageUrl, prompt) => handleDownload(imageUrl, prompt)}
                       onVariation={handleVariation}
+                      onDelete={() => handleDeleteImage(image.id)}
+                      createdAt={image.created_at}
                     />
                   ))}
           </div>

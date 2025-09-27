@@ -6,9 +6,12 @@ interface ImageCardProps {
   style: string;
   onDownload: (imageUrl: string, prompt: string) => void;
   onVariation: (prompt: string, style: string) => void;
+  onDelete?: () => void;
+  createdAt?: string;
+  isRegenerating?: boolean;
 }
 
-export default function ImageCard({ src, prompt, style, onDownload, onVariation }: ImageCardProps) {
+export default function ImageCard({ src, prompt, style, onDownload, onVariation, onDelete, createdAt, isRegenerating }: ImageCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -65,6 +68,24 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation 
         onError={() => setImageError(true)}
       />
       
+      {/* Delete button - always visible in top right */}
+      {onDelete && (
+        <button
+          onClick={onDelete}
+          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          title="Delete image"
+        >
+          ×
+        </button>
+      )}
+
+      {/* Timestamp - always visible in top left */}
+      {createdAt && (
+        <div className="absolute top-2 left-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded">
+          {new Date(createdAt).toLocaleString()}
+        </div>
+      )}
+
       {isHovered && (
         <div className="absolute inset-0 bg-black bg-opacity-70 flex flex-col justify-between p-4 transition-opacity duration-200">
           <div>
@@ -83,9 +104,14 @@ export default function ImageCard({ src, prompt, style, onDownload, onVariation 
             </button>
             <button
               onClick={() => onVariation(prompt, style)}
-              className="flex-1 bg-slate-600 hover:bg-slate-700 text-white py-2 px-3 rounded-lg text-sm font-medium transition-colors"
+              disabled={isRegenerating}
+              className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                isRegenerating 
+                  ? 'bg-purple-600 text-white cursor-not-allowed' 
+                  : 'bg-slate-600 hover:bg-slate-700 text-white'
+              }`}
             >
-              Variation
+              {isRegenerating ? 'Regenerating...' : 'Variation'}
             </button>
           </div>
         </div>

@@ -12,6 +12,7 @@ interface SupabaseContextType {
   signOut: () => Promise<void>
   saveGeneratedImage: (imageData: Omit<GeneratedImage, 'id' | 'created_at' | 'updated_at'>) => Promise<void>
   getGeneratedImages: () => Promise<GeneratedImage[]>
+  deleteGeneratedImage: (imageId: string) => Promise<void>
 }
 
 const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
@@ -148,6 +149,24 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }
 
+  const deleteGeneratedImage = async (imageId: string): Promise<void> => {
+    try {
+      if (!user) throw new Error('User not authenticated')
+      
+      const { error } = await supabase
+        .from('generated_images')
+        .delete()
+        .eq('id', imageId)
+        .eq('user_id', user.id)
+      
+      if (error) throw error
+      console.log('🗑️ Image deleted successfully')
+    } catch (error: any) {
+      console.error('Error deleting image:', error)
+      throw error
+    }
+  }
+
 
   const value = {
     user,
@@ -158,6 +177,7 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     signOut,
     saveGeneratedImage,
     getGeneratedImages,
+    deleteGeneratedImage,
   }
 
   return (
