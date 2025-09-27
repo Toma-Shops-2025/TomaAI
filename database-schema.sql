@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS users (
   subscription_tier VARCHAR(20) DEFAULT 'free',
   subscription_status VARCHAR(20) DEFAULT 'active',
   trial_ends_at TIMESTAMP WITH TIME ZONE,
+  email_collected BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

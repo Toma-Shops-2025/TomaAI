@@ -3,16 +3,32 @@ import { User, Session } from '@supabase/supabase-js'
 import { supabase, GeneratedImage } from '@/lib/supabase'
 import { toast } from '@/components/ui/use-toast'
 
+interface UserProfile {
+  id: string
+  email: string
+  full_name?: string
+  avatar_url?: string
+  subscription_tier: string
+  subscription_status: string
+  trial_ends_at?: string
+  email_collected: boolean
+  created_at: string
+  updated_at: string
+}
+
 interface SupabaseContextType {
   user: User | null
   session: Session | null
   loading: boolean
+  userProfile: UserProfile | null
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   saveGeneratedImage: (imageData: Omit<GeneratedImage, 'id' | 'created_at' | 'updated_at'>) => Promise<void>
   getGeneratedImages: () => Promise<GeneratedImage[]>
   deleteGeneratedImage: (imageId: string) => Promise<void>
+  getUserProfile: () => Promise<UserProfile | null>
+  updateEmailCollected: (emailCollected: boolean) => Promise<void>
 }
 
 const SupabaseContext = createContext<SupabaseContextType | undefined>(undefined)
@@ -29,6 +45,7 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
 
   useEffect(() => {
     // Get initial session
@@ -49,6 +66,19 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     return () => subscription.unsubscribe()
   }, [])
+
+  // Load user profile when user changes
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (user) {
+        const profile = await getUserProfile()
+        setUserProfile(profile)
+      } else {
+        setUserProfile(null)
+      }
+    }
+    loadUserProfile()
+  }, [user])
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -167,17 +197,59 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }
 
+  const getUserProfile = async (): Promise<UserProfile | null> => {
+    try {
+      if (!user) return null
+      
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+      
+      if (error) throw error
+      return data
+    } catch (error: any) {
+      console.error('Error fetching user profile:', error)
+      return null
+    }
+  }
+
+  const updateEmailCollected = async (emailCollected: boolean): Promise<void> => {
+    try {
+      if (!user) throw new Error('User not authenticated')
+      
+      const { error } = await supabase
+        .from('users')
+        .update({ email_collected: emailCollected })
+        .eq('id', user.id)
+      
+      if (error) throw error
+      
+      // Update local state
+      setUserProfile(prev => prev ? { ...prev, email_collected: emailCollected } : null)
+      
+      console.log('📧 Email collected status updated:', emailCollected)
+    } catch (error: any) {
+      console.error('Error updating email collected status:', error)
+      throw error
+    }
+  }
+
 
   const value = {
     user,
     session,
     loading,
+    userProfile,
     signIn,
     signUp,
     signOut,
     saveGeneratedImage,
     getGeneratedImages,
     deleteGeneratedImage,
+    getUserProfile,
+    updateEmailCollected,
   }
 
   return (

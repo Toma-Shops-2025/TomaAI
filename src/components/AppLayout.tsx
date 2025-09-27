@@ -18,7 +18,7 @@ import PublicGallery from './PublicGallery';
 import ExtendedPricingModal from './ExtendedPricingModal';
 
 export default function AppLayout() {
-  const { user, saveGeneratedImage, getGeneratedImages, signOut, deleteGeneratedImage } = useSupabase();
+  const { user, saveGeneratedImage, getGeneratedImages, signOut, deleteGeneratedImage, userProfile, updateEmailCollected } = useSupabase();
   const [selectedStyle, setSelectedStyle] = useState('photorealistic');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [quality, setQuality] = useState('high');
@@ -66,6 +66,16 @@ export default function AppLayout() {
     createStorageBucket();
   }, []);
 
+  // Initialize emailCollected from user profile
+  useEffect(() => {
+    if (userProfile) {
+      setUserSubscription(prev => ({
+        ...prev,
+        emailCollected: userProfile.email_collected
+      }));
+    }
+  }, [userProfile]);
+
   // Load saved images on component mount
   useEffect(() => {
     const loadSavedImages = async () => {
@@ -76,7 +86,8 @@ export default function AppLayout() {
         setUserSubscription(prev => ({
           ...prev,
           imagesUsed: 0,
-          emailCollected: false
+          // Don't reset emailCollected - keep it if user already provided email
+          // emailCollected: false
         }));
         // Add a small delay to ensure state is cleared
         await new Promise(resolve => setTimeout(resolve, 100));
@@ -332,24 +343,40 @@ export default function AppLayout() {
     handleGenerate(variationPrompt, '');
   };
 
-  const handleEmailCollection = (email: string) => {
+  const handleEmailCollection = async (email: string) => {
     console.log('📧 Email collection triggered:', email);
     
-    // Update subscription state to show email collected
-    setUserSubscription(prev => {
-      console.log('📧 Updating emailCollected from', prev.emailCollected, 'to true');
-      return {
+    try {
+      // Update email collected status in database
+      await updateEmailCollected(true);
+      
+      // Update subscription state to show email collected
+      setUserSubscription(prev => {
+        console.log('📧 Updating emailCollected from', prev.emailCollected, 'to true');
+        return {
+          ...prev,
+          emailCollected: true
+        };
+      });
+      
+      // Store email in localStorage for backup
+      localStorage.setItem('userEmail', email);
+      
+      console.log('📧 Email collected and saved to database:', email);
+      
+      // You could also send a welcome email here
+      // sendWelcomeEmail(email);
+    } catch (error) {
+      console.error('Error updating email collected status:', error);
+      // Fallback to localStorage if database update fails
+      localStorage.setItem('emailCollected', 'true');
+      localStorage.setItem('userEmail', email);
+      
+      setUserSubscription(prev => ({
         ...prev,
         emailCollected: true
-      };
-    });
-    
-    // Here you would typically save the email to your database
-    // For now, we'll just update the local state
-    console.log('Email collected:', email);
-    
-    // You could also send a welcome email here
-    // sendWelcomeEmail(email);
+      }));
+    }
   };
 
   const handleDeleteImage = async (imageId: string) => {
