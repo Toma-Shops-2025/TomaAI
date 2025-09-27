@@ -25,6 +25,51 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
     { images: 1000, price: 35.00, savings: '65%', popular: false }
   ];
 
+  const subscriptionPlans = [
+    {
+      name: "Starter",
+      price: 9.00,
+      description: "Perfect for getting started",
+      features: [
+        "50 AI-generated images per month",
+        "Basic style presets",
+        "Standard quality (1024x1024)",
+        "Email support",
+        "3-day free trial"
+      ],
+      popular: false
+    },
+    {
+      name: "Pro",
+      price: 15.00,
+      description: "For creators who need more power",
+      features: [
+        "200 AI-generated images per month",
+        "All style presets + custom styles",
+        "High quality (2048x2048)",
+        "Priority support",
+        "Advanced generation settings",
+        "3-day free trial"
+      ],
+      popular: true
+    },
+    {
+      name: "Enterprise",
+      price: 49.00,
+      description: "For teams and businesses",
+      features: [
+        "Unlimited AI-generated images",
+        "All style presets + custom styles",
+        "Ultra HD quality (4096x4096)",
+        "24/7 dedicated support",
+        "API access",
+        "Team collaboration features",
+        "3-day free trial"
+      ],
+      popular: false
+    }
+  ];
+
   const handlePurchase = async (packageType: string, images: number, price: number) => {
     try {
       const confirmed = window.confirm(
@@ -68,6 +113,42 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
     }
   };
 
+  const handleSubscribe = async (planName: string, price: number) => {
+    try {
+      const confirmed = window.confirm(
+        `Start 3-day free trial for ${planName} plan ($${price}/month after trial)?\n\nThis will redirect you to our secure payment processor.`
+      );
+      
+      if (confirmed) {
+        // Use passed user info or fallback
+        const email = userEmail || 'user@example.com';
+        const id = userId || 'temp-user-id';
+        
+        // Create price ID based on plan
+        let priceId = '';
+        if (planName === 'Starter') priceId = 'price_starter_monthly';
+        else if (planName === 'Pro') priceId = 'price_pro_monthly';
+        else if (planName === 'Enterprise') priceId = 'price_enterprise_monthly';
+        
+        if (!priceId) {
+          alert('Invalid plan selection. Please try again.');
+          return;
+        }
+        
+        // Create payment session
+        const { createPaymentSession, redirectToCheckout } = await import('@/lib/stripe');
+        const sessionId = await createPaymentSession(priceId, id, email);
+        
+        // Redirect to Stripe Checkout
+        await redirectToCheckout(sessionId);
+        onClose();
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      alert('Payment processing failed. Please try again.');
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-slate-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -80,6 +161,60 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
               >
                 ×
               </button>
+            </div>
+
+            {/* Subscription Plans Section */}
+            <div className="mb-8">
+              <h3 className="text-2xl font-semibold text-white mb-4">Subscription Plans</h3>
+              <p className="text-gray-400 mb-6">Best value for regular users - Start with a 3-day free trial!</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {subscriptionPlans.map((plan) => (
+                  <div
+                    key={plan.name}
+                    className={`p-6 rounded-lg border transition-all ${
+                      plan.popular
+                        ? 'border-cyan-500 bg-cyan-900/20 scale-105'
+                        : 'border-slate-600 hover:border-slate-500'
+                    }`}
+                  >
+                    {plan.popular && (
+                      <div className="text-center mb-4">
+                        <span className="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full">Most Popular</span>
+                      </div>
+                    )}
+                    
+                    <div className="text-center mb-4">
+                      <h4 className="text-xl font-bold text-white">{plan.name}</h4>
+                      <p className="text-gray-400 text-sm">{plan.description}</p>
+                      <div className="mt-2">
+                        <span className="text-3xl font-bold text-white">${plan.price}</span>
+                        <span className="text-gray-400">/month</span>
+                      </div>
+                    </div>
+                    
+                    <ul className="space-y-2 mb-6">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="flex items-start text-sm">
+                          <span className="text-green-500 mr-2">✓</span>
+                          <span className="text-gray-300">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <button
+                      onClick={() => handleSubscribe(plan.name, plan.price)}
+                      className={`w-full py-2 px-4 rounded-md font-medium transition-all ${
+                        plan.popular
+                          ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white'
+                          : 'bg-slate-600 hover:bg-slate-500 text-white'
+                      }`}
+                    >
+                      Start Free Trial
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
