@@ -333,11 +333,16 @@ export default function AppLayout() {
   };
 
   const handleEmailCollection = (email: string) => {
+    console.log('📧 Email collection triggered:', email);
+    
     // Update subscription state to show email collected
-    setUserSubscription(prev => ({
-      ...prev,
-      emailCollected: true
-    }));
+    setUserSubscription(prev => {
+      console.log('📧 Updating emailCollected from', prev.emailCollected, 'to true');
+      return {
+        ...prev,
+        emailCollected: true
+      };
+    });
     
     // Here you would typically save the email to your database
     // For now, we'll just update the local state

@@ -27,7 +27,7 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
       // Show email modal if they've used 1+ images but haven't provided email
       console.log('Debug - Email check:', { userTier, imagesUsed, emailCollected });
       if (userTier === 'free' && (imagesUsed || 0) >= 1 && !emailCollected) {
-        console.log('Showing email modal');
+        console.log('📧 Showing email modal - user has used', imagesUsed, 'images but emailCollected is', emailCollected);
         setShowEmailSignup(true);
         return;
       }
@@ -44,14 +44,22 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
     }
   };
 
-  const handleEmailSignup = (e: React.FormEvent) => {
+  const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
+      console.log('📧 Email signup submitted:', email);
+      
       // Call the email collection handler
       if (onEmailCollection) {
+        console.log('📧 Calling onEmailCollection...');
         onEmailCollection(email);
       }
       setShowEmailSignup(false);
+      
+      // Add a small delay to ensure the parent state is updated
+      console.log('📧 Waiting for state update...');
+      await new Promise(resolve => setTimeout(resolve, 100));
+      console.log('📧 Proceeding with image generation...');
       onGenerate(prompt, negativePrompt);
     }
   };
