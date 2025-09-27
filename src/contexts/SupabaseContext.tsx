@@ -135,7 +135,6 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         .from('generated_images')
         .select('*')
         .order('created_at', { ascending: false })
-        .abortSignal(AbortSignal.timeout(5000)) // 5 second timeout
       
       if (error) throw error
       return data || []
