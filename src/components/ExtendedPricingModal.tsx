@@ -77,39 +77,13 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
       );
       
       if (confirmed) {
-        // Use passed user info or fallback
-        const email = userEmail || 'user@example.com';
-        const id = userId || 'temp-user-id';
-        
-        // Create price ID based on package
-        let priceId = '';
-        if (packageType === 'pay') {
-          if (images === 1) priceId = 'price_single_image';
-          else if (images === 5) priceId = 'price_five_images';
-          else if (images === 10) priceId = 'price_ten_images';
-          else if (images === 25) priceId = 'price_twenty_five_images';
-        } else if (packageType === 'bulk') {
-          if (images === 100) priceId = 'price_hundred_images';
-          else if (images === 500) priceId = 'price_five_hundred_images';
-          else if (images === 1000) priceId = 'price_thousand_images';
-        }
-        
-        if (!priceId) {
-          alert('Invalid package selection. Please try again.');
-          return;
-        }
-        
-        // Create payment session
-        const { createPaymentSession, redirectToCheckout } = await import('@/lib/stripe');
-        const sessionId = await createPaymentSession(priceId, id, email);
-        
-        // Redirect to Stripe Checkout
-        await redirectToCheckout(sessionId);
+        // For now, show a message that payment is being set up
+        alert(`Payment integration is being set up. For now, please contact support to purchase ${images} images for $${price.toFixed(2)}. We'll have automatic payments available soon!`);
         onClose();
       }
     } catch (error) {
       console.error('Purchase error:', error);
-      alert('Payment processing failed. Please try again.');
+      alert('Payment processing is temporarily unavailable. Please contact support for manual processing.');
     }
   };
 
@@ -120,32 +94,13 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
       );
       
       if (confirmed) {
-        // Use passed user info or fallback
-        const email = userEmail || 'user@example.com';
-        const id = userId || 'temp-user-id';
-        
-        // Create price ID based on plan
-        let priceId = '';
-        if (planName === 'Starter') priceId = 'price_starter_monthly';
-        else if (planName === 'Pro') priceId = 'price_pro_monthly';
-        else if (planName === 'Enterprise') priceId = 'price_enterprise_monthly';
-        
-        if (!priceId) {
-          alert('Invalid plan selection. Please try again.');
-          return;
-        }
-        
-        // Create payment session
-        const { createPaymentSession, redirectToCheckout } = await import('@/lib/stripe');
-        const sessionId = await createPaymentSession(priceId, id, email);
-        
-        // Redirect to Stripe Checkout
-        await redirectToCheckout(sessionId);
+        // For now, show a message that subscription is being set up
+        alert(`Subscription integration is being set up. For now, please contact support to start your ${planName} plan ($${price}/month). We'll have automatic subscriptions available soon!`);
         onClose();
       }
     } catch (error) {
       console.error('Subscription error:', error);
-      alert('Payment processing failed. Please try again.');
+      alert('Subscription processing is temporarily unavailable. Please contact support for manual setup.');
     }
   };
 
@@ -291,9 +246,33 @@ export default function ExtendedPricingModal({ isOpen, onClose, userEmail, userI
             </div>
           </div>
 
+          {/* Contact Support Section */}
+          <div className="mt-8 pt-6 border-t border-slate-700">
+            <div className="bg-slate-700 rounded-lg p-6 text-center">
+              <h3 className="text-xl font-semibold text-white mb-2">Need Help Choosing?</h3>
+              <p className="text-gray-300 mb-4">
+                Our payment system is being upgraded. Contact support for immediate assistance with purchases.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href="mailto:support@tomaai.online"
+                  className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-medium py-2 px-6 rounded-md transition-all"
+                >
+                  Contact Support
+                </a>
+                <a
+                  href="https://tomaai.online/help"
+                  className="bg-slate-600 hover:bg-slate-500 text-white font-medium py-2 px-6 rounded-md transition-all"
+                >
+                  View Help Center
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Purchase Button */}
           {selectedPackage && (
-            <div className="mt-8 pt-6 border-t border-slate-700">
+            <div className="mt-4">
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-white font-medium">
