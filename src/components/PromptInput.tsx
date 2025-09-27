@@ -10,9 +10,10 @@ interface PromptInputProps {
   generationStatus?: string;
   onEmailCollection?: (email: string) => void;
   onShowPricing?: () => void;
+  emailCollected?: boolean;
 }
 
-export default function PromptInput({ onGenerate, isGenerating, userTier, imagesUsed, maxImages, generationProgress, generationStatus, onEmailCollection, onShowPricing }: PromptInputProps) {
+export default function PromptInput({ onGenerate, isGenerating, userTier, imagesUsed, maxImages, generationProgress, generationStatus, onEmailCollection, onShowPricing, emailCollected }: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -24,7 +25,9 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
     if (prompt.trim() && !isGenerating) {
       // Check if user needs to provide email for free images
       // Show email modal if they've used 1+ images but haven't provided email
-      if (userTier === 'free' && (imagesUsed || 0) >= 1 && !localStorage.getItem('emailCollected')) {
+      console.log('Debug - Email check:', { userTier, imagesUsed, emailCollected });
+      if (userTier === 'free' && (imagesUsed || 0) >= 1 && !emailCollected) {
+        console.log('Showing email modal');
         setShowEmailSignup(true);
         return;
       }
@@ -44,10 +47,6 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
   const handleEmailSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
-      // Store email in localStorage to track collection
-      localStorage.setItem('emailCollected', 'true');
-      localStorage.setItem('userEmail', email);
-      
       // Call the email collection handler
       if (onEmailCollection) {
         onEmailCollection(email);

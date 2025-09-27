@@ -482,6 +482,7 @@ export default function AppLayout() {
                   generationStatus={generationStatus}
                   onEmailCollection={handleEmailCollection}
                   onShowPricing={() => setShowExtendedPricing(true)}
+                  emailCollected={userSubscription.emailCollected}
                 />
                 
                 <StyleSelector
