@@ -130,10 +130,12 @@ export const SupabaseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const getGeneratedImages = async (): Promise<GeneratedImage[]> => {
     try {
+      // Add cache busting to prevent stale data
       const { data, error } = await supabase
         .from('generated_images')
         .select('*')
         .order('created_at', { ascending: false })
+        .abortSignal(AbortSignal.timeout(5000)) // 5 second timeout
       
       if (error) throw error
       return data || []

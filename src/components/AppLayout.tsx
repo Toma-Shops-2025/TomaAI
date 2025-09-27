@@ -65,7 +65,20 @@ export default function AppLayout() {
   useEffect(() => {
     const loadSavedImages = async () => {
       if (user) {
+        // Clear any cached data first
+        console.log('🔄 Clearing cached data for fresh login');
+        setSavedImages([]);
+        setUserSubscription(prev => ({
+          ...prev,
+          imagesUsed: 0,
+          emailCollected: false
+        }));
+        // Add a small delay to ensure state is cleared
+        await new Promise(resolve => setTimeout(resolve, 100));
+        // Then load fresh data
+        console.log('📥 Loading fresh images from Supabase');
         const images = await getGeneratedImages();
+        console.log('✅ Loaded images:', images.length);
         setSavedImages(images);
       } else {
         // Reset saved images when user logs out
