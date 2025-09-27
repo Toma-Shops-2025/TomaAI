@@ -105,9 +105,15 @@ export default function AppLayout() {
     const isTrial = isTrialActive(userSubscription.trialEndsAt);
     
     if (!canGenerate && !isTrial) {
-      alert('You have reached your image limit. Please upgrade your plan to generate more images.');
-      setShowPricingModal(true);
-      return;
+      // For free users who have used all 3 images, show pricing options
+      if (userSubscription.tier === 'free') {
+        setShowExtendedPricing(true);
+        return;
+      } else {
+        alert('You have reached your image limit. Please upgrade your plan to generate more images.');
+        setShowPricingModal(true);
+        return;
+      }
     }
     
     setIsGenerating(true);
@@ -458,6 +464,7 @@ export default function AppLayout() {
                   generationProgress={generationProgress}
                   generationStatus={generationStatus}
                   onEmailCollection={handleEmailCollection}
+                  onShowPricing={() => setShowExtendedPricing(true)}
                 />
                 
                 <StyleSelector

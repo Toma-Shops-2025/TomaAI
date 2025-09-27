@@ -9,9 +9,10 @@ interface PromptInputProps {
   generationProgress?: number;
   generationStatus?: string;
   onEmailCollection?: (email: string) => void;
+  onShowPricing?: () => void;
 }
 
-export default function PromptInput({ onGenerate, isGenerating, userTier, imagesUsed, maxImages, generationProgress, generationStatus, onEmailCollection }: PromptInputProps) {
+export default function PromptInput({ onGenerate, isGenerating, userTier, imagesUsed, maxImages, generationProgress, generationStatus, onEmailCollection, onShowPricing }: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -21,11 +22,21 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (prompt.trim() && !isGenerating) {
-      // Check if user needs to sign up for free images
-      if (userTier === 'free' && (imagesUsed || 0) >= 3) {
+      // Check if user needs to provide email for free images
+      // Show email modal if they've used 1+ images but haven't provided email
+      if (userTier === 'free' && (imagesUsed || 0) >= 1 && !localStorage.getItem('emailCollected')) {
         setShowEmailSignup(true);
         return;
       }
+      
+      // If they've used all 3 free images, show pricing instead
+      if (userTier === 'free' && (imagesUsed || 0) >= 3) {
+        if (onShowPricing) {
+          onShowPricing();
+        }
+        return;
+      }
+      
       onGenerate(prompt, negativePrompt);
     }
   };
@@ -33,6 +44,10 @@ export default function PromptInput({ onGenerate, isGenerating, userTier, images
   const handleEmailSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
+      // Store email in localStorage to track collection
+      localStorage.setItem('emailCollected', 'true');
+      localStorage.setItem('userEmail', email);
+      
       // Call the email collection handler
       if (onEmailCollection) {
         onEmailCollection(email);
