@@ -61,6 +61,11 @@ export default function AppLayout() {
     { name: 'Artistic', description: 'Traditional art', previewImage: sampleImages[10]?.src || '' }
   ];
 
+  // Initialize storage bucket on app start
+  useEffect(() => {
+    createStorageBucket();
+  }, []);
+
   // Load saved images on component mount
   useEffect(() => {
     const loadSavedImages = async () => {
